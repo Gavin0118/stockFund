@@ -68,8 +68,4 @@ public class dataBaseClass {
             e.printStackTrace();
         }
     }
-
-    public void run() {
-
-    }
 }
