@@ -4,20 +4,20 @@ import java.sql.ResultSet;
 
 import static main.Main.dbtpr;
 
-public class queryRunnable implements Runnable {
+class queryRunnable implements Runnable {
 
-    dataBaseClass db = new dataBaseClass();
-    String str = null;
-    ResultSet rs = null;
+    private dataBaseClass db = new dataBaseClass();
+    private String str;
+    private ResultSet rs = null;
 
-    public queryRunnable(String str){
+    queryRunnable(String str){
         this.str = str;
     }
 
     public void run(){
-        dbtpr.putQuerytOrInsertCode(str);
+        dbtpr.new function().putQuerytCode(str);
         rs = db.query(str);
-        dbtpr.putQuerytResult(str,rs);
+        dbtpr.new function().putQuerytResult(str,rs);
     }
 
 }

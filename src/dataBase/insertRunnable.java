@@ -1,20 +1,15 @@
 package dataBase;
 
-import static main.Main.dbtpr;
+class insertRunnable implements Runnable {
 
-public class insertRunnable implements Runnable {
+    private dataBaseClass db = new dataBaseClass();
+    private String str;
 
-    dataBaseClass db = new dataBaseClass();
-    String str = null;
-    boolean result = false;
-
-    public insertRunnable(String str){
+    insertRunnable(String str) {
         this.str = str;
     }
 
-    public void run(){
-        dbtpr.putQuerytOrInsertCode(str);
-        result = db.insert(str);
-        dbtpr.putInsertResult(str,result);
+    public void run() {
+        db.insert(str);
     }
 }
