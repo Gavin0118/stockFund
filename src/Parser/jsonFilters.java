@@ -3,79 +3,87 @@ package Parser;
 import dataBase.dataBaseClass;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import variable.publicVariable;
 
 public class jsonFilters {
-	
+
+	//åŸºé‡‘æ—¥æ•°æ®ä½¿ç”¨æ•°ç»„
+	//"http://api.fund.eastmoney.com/f10/lsjz?fundCode=270042&pageIndex=1&pageSize=2000";
+	public final static String[] api_fund_eastmoney_com = {"Data","ErrCode","ErrMsg","TotalCount","Expansion","PageSize","PageIndex"};
+	public final static String[] api_fund_eastmoney_com_Data = {"LSJZList","FundType","SYType","isNewType","Feature"};
+	public final static String[] api_fund_eastmoney_com_Data_LSJZList = {"FSRQ", "DWJZ","LJJZ","SDATE","ACTUALSYI","NAVTYPE","JZZZL","SGZT","SHZT","FHFCZ","FHFCBZ","DTYPE","FHSP"};
+
+	public static int count=0; //å–åŸºé‡‘ä»£ç ä¸´æ—¶å˜é‡ï¼Œè®¡æ•°ç”¨
+
+
 	public static void jsonFiltersFundHistoryDay(String stockFund_code,String str) {
-		JSONObject jsonObject; //Õû¸öJSON¶ÔÏó
-		JSONObject jsonObject_Data; //JSON¶ÔÏóµÄ×Ó¶ÔÏóData 
-		JSONArray jsonArray_Data_LSJZList = null; //DataÏÂÊı×é¶ÔÏóLSJZList
-		JSONObject jsonArray_LSJZList_son; 
+		JSONObject jsonObject; //æ•´ä¸ªJSONå¯¹è±¡
+		JSONObject jsonObject_Data; //JSONå¯¹è±¡çš„å­å¯¹è±¡Data
+		JSONArray jsonArray_Data_LSJZList = null; //Dataä¸‹æ•°ç»„å¯¹è±¡LSJZList
+		JSONObject jsonArray_LSJZList_son;
 		jsonObject = JSONObject.fromObject(str);
-		
+
 		String sqlstr1 ="";
 		String sqlBefore_1 = new String("INSERT INTO fund_details_tables(fund_code,FundType,SYType,isNewType,Feature) VALUES (\""+stockFund_code+"\"");
 		String sqlMiddle_1 = "";
 		String sqlAfter_1 = ");";
-		
+
 		String sqlstr2 ="";
 		String sqlBefore_2 = new String("INSERT INTO fund_day_data_tables (fund_code,date,DWJZ,LJJZ,SDATE,ACTUALSYI,NAVTYPE,JZZZL,SGZT,SHZT,FHFCZ,FHFCBZ,DTYPE,FHSP) VALUES (\""+stockFund_code+"\"");
 		String sqlMiddle_2 = "";
 		String sqlAfter_2 = ");";
-		
+
 		dataBaseClass db = new dataBaseClass();
 		//db.dataBaseInit();
-		
+
 		jsonObject_Data = (JSONObject) jsonObject.get("Data");
-		
-		//ÌáÈ¡ÓëDataÆ½¼¶µÄÆäËûÊı¾İ£¬Ò³ÃæĞ£ÑéÊı¾İ£¬²»´æ·ÅÓÚÊı¾İ¿â
+
+		//æå–ä¸Dataå¹³çº§çš„å…¶ä»–æ•°æ®ï¼Œé¡µé¢æ ¡éªŒæ•°æ®ï¼Œä¸å­˜æ”¾äºæ•°æ®åº“
 //		for(int i=1;i<publicVariable.api_fund_eastmoney_com.length;i++) {
 //			System.out.print(jsonObject.getString(publicVariable.api_fund_eastmoney_com[i])+"\t");
-//		}	
-		
-		//ÌáÈ¡DataÏÂ³ıLSJZListÏÂÊı×éÒÔÍâµÄÊı¾İ´æ£¬´æ·ÅÓÚ±í stock_fund_code
-		for(int i=1;i<publicVariable.api_fund_eastmoney_com_Data.length;i++) {
-			sqlMiddle_1 = new String(sqlMiddle_1+","+"\""+jsonObject_Data.getString(publicVariable.api_fund_eastmoney_com_Data[i])+"\"");
+//		}
+
+		//æå–Dataä¸‹é™¤LSJZListä¸‹æ•°ç»„ä»¥å¤–çš„æ•°æ®å­˜ï¼Œå­˜æ”¾äºè¡¨ stock_fund_code
+		for(int i=1;i<api_fund_eastmoney_com_Data.length;i++) {
+			sqlMiddle_1 = new String(sqlMiddle_1+","+"\""+jsonObject_Data.getString(api_fund_eastmoney_com_Data[i])+"\"");
 		}
 		sqlstr1 = new String(sqlBefore_1+sqlMiddle_1+sqlAfter_1);
 		db.insert(sqlstr1);
-		
-		//ÌáÈ¡DataÏÂÊı×é¶ÔÏóLSJZListÀïÃæÊı×éÊı¾İ£¬´æ·ÅÓÚ±í day_data_tablesÀïÃæ	
+
+		//æå–Dataä¸‹æ•°ç»„å¯¹è±¡LSJZListé‡Œé¢æ•°ç»„æ•°æ®ï¼Œå­˜æ”¾äºè¡¨ day_data_tablesé‡Œé¢
 		jsonArray_Data_LSJZList = jsonObject_Data.getJSONArray("LSJZList");
 		for(int i=0;i<jsonArray_Data_LSJZList.size();i++) {
 			jsonArray_LSJZList_son=JSONObject.fromObject(jsonArray_Data_LSJZList.get(i));
 			sqlMiddle_2 = new String("");
-			for(int j=0;j<publicVariable.api_fund_eastmoney_com_Data_LSJZList.length;j++) {
+			for(int j=0;j<api_fund_eastmoney_com_Data_LSJZList.length;j++) {
 				//System.out.print(jsonArray_LSJZList_son.getString(publicVariable.api_fund_eastmoney_com_Data_LSJZList[j])+"\t");
 				//jsonArray_LSJZList_son.getString(publicVariable.api_fund_eastmoney_com_Data_LSJZList[j]);
-				sqlMiddle_2 = new String(sqlMiddle_2+","+"\""+jsonArray_LSJZList_son.getString(publicVariable.api_fund_eastmoney_com_Data_LSJZList[j])+"\"");
+				sqlMiddle_2 = new String(sqlMiddle_2+","+"\""+jsonArray_LSJZList_son.getString(api_fund_eastmoney_com_Data_LSJZList[j])+"\"");
 			}
 			sqlstr2 = new String(sqlBefore_2+sqlMiddle_2+sqlAfter_2);
 			db.insert(sqlstr2);
-		}	
+		}
 		db.queryCodeClose();
 	}
 
 	public static void jsonFiltersFundForCodeMonthYear(String str) {
-		JSONObject jsonObject; //´æÕû¸öJSON¶ÔÏó
-		JSONArray jsonArray_datas = null; //´ædatasÊı×é
-		String strtemp1 = "";  //ÁÙÊ±´ædatasÊı×éÖĞÃ¿ÌõÊı¾İ
-		String strtemp2 = "";  //ÁÙÊ±´æ·Å´Óstrtemp1ÖĞÈ¡³öÀ´µÄ×Ö·û´®
-		String sqlmiddle = "";  //ÁÙÊ±´æ·Å½«strtemp2ÖØĞÂ´¦ÀíºóµÄÊı¾İ
+		JSONObject jsonObject; //å­˜æ•´ä¸ªJSONå¯¹è±¡
+		JSONArray jsonArray_datas = null; //å­˜datasæ•°ç»„
+		String strtemp1 = "";  //ä¸´æ—¶å­˜datasæ•°ç»„ä¸­æ¯æ¡æ•°æ®
+		String strtemp2 = "";  //ä¸´æ—¶å­˜æ”¾ä»strtemp1ä¸­å–å‡ºæ¥çš„å­—ç¬¦ä¸²
+		String sqlmiddle = "";  //ä¸´æ—¶å­˜æ”¾å°†strtemp2é‡æ–°å¤„ç†åçš„æ•°æ®
 		String sqlstr = "";
-		String sqlstrBefore ="INSERT INTO fund_month_year_net_tables (fund_code,fund_name,fund_name_code,date,DWJZ,NJJZ,RZZL,Nearly_a_week,Nearly_a_month,Nearly_three_month,Nearly_six_month," + 
-				"Nearly_a_year,Nearly_two_year,Nearly_three_year,since_this_year,since_the_found,date_fund_found,stranger1,stranger2,stranger3,Service_charge1,stranger4,Service_charge2," + 
+		String sqlstrBefore ="INSERT INTO fund_month_year_net_tables (fund_code,fund_name,fund_name_code,date,DWJZ,NJJZ,RZZL,Nearly_a_week,Nearly_a_month,Nearly_three_month,Nearly_six_month," +
+				"Nearly_a_year,Nearly_two_year,Nearly_three_year,since_this_year,since_the_found,date_fund_found,stranger1,stranger2,stranger3,Service_charge1,stranger4,Service_charge2," +
 				"stranger5,stranger6)VALUES (";
-		int n =0 ;//¼ÆËã×Ö·û´®ÖĞ¶ººÅ¸öÊı
-		
+		int n =0 ;//è®¡ç®—å­—ç¬¦ä¸²ä¸­é€—å·ä¸ªæ•°
+
 		dataBaseClass db = new dataBaseClass();
 		//db.dataBaseClass();
-		
+
 		jsonObject = JSONObject.fromObject(str.substring(str.indexOf('{'), str.indexOf('}')+1));
-		
+
 		jsonArray_datas = jsonObject.getJSONArray("datas");
-	
+
 		for(int i=0;i<jsonArray_datas.size();i++) {
 			strtemp1 = jsonArray_datas.get(i).toString();
 			n=function.littleFunction.search(strtemp1,",");
@@ -90,9 +98,9 @@ public class jsonFilters {
 			}
 			sqlstr = new String(sqlstrBefore+sqlmiddle+"\""+strtemp1+"\");");
 			db.insert(sqlstr);
-			
-			file.txt.logFileWrite(++publicVariable.count+" ");
-			if(publicVariable.count%50==0)
+
+			file.txt.logFileWrite(++count+" ");
+			if(count%50==0)
 				file.txt.logFileWrite("\n");
 		}
 		db.queryCodeClose();

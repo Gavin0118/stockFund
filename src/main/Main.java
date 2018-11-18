@@ -1,19 +1,29 @@
 package main;
 
+import dataBase.dataBaseClass;
+import org.jsoup.nodes.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dataBase.dataBaseClass;
-import org.jsoup.nodes.Document;
-
 //import org.jsoup.nodes.Document;
-
-import variable.publicVariable;
 
 public class Main {
 
+	//å–åŸºé‡‘ä»£ç åŠæœˆåº¦ã€ å¹´åº¦æ•°æ®é“¾æ¥
+	public final static String fund_month_year_tables_url_before = "http://fund.eastmoney.com/data/rankhandler.aspx?op=ph&dt=kf&ft=all&rs=&gs=0&sc=zzf&st=desc&pi=";
+	public final static String fund_month_year_tables_url_after = "&pn=1000&dx=1";
+	public final static String fund_month_year_tables_referrerUrl = new String("http://fund.eastmoney.com/data/fundranking.html");
+
+	//ä¸œæ–¹è´¢å¯Œ å¤©å¤©åŸºé‡‘ç½‘ é€šè¿‡åŸºé‡‘ä»£ç å¾—åˆ°åŸºé‡‘æ—¥æ•°æ®è¡¨çš„é“¾æ¥æ‹¼å‡‘
+	//http://api.fund.eastmoney.com/f10/lsjz?fundCode=270042&pageIndex=1&pageSize=2000
+	public final static String fund_day_data_tables_url_before = "http://api.fund.eastmoney.com/f10/lsjz?fundCode=";
+	public final static String fund_day_data_tables_url_middle = "&pageIndex=";
+	public final static String fund_day_data_tables_url_after  = "&pageSize=2000";
+	public final static String fund_day_data_tables_referrerUrl_before = "http://fund.eastmoney.com/f10/jjjz_";
+	public final static String fund_day_data_tables_referrerUrl_after = ".htm";
+
 	public static void main(String[] args) {
-		 //TODO Auto-generated method stub
+		//TODO Auto-generated method stub
 		String jsonSelectresult = "";
 		Document doc;
 		String referrerUrl="";
@@ -25,53 +35,53 @@ public class Main {
 		dataBaseClass db1 = new dataBaseClass();
 		//db.dataBaseInit();
 		//db1.dataBaseInit();
-		
-		//µÃµ½»ù½ğ´úÂë±í¼°»ù½ğÄêÔÂÊı¾İ
+
+		//å¾—åˆ°åŸºé‡‘ä»£ç è¡¨åŠåŸºé‡‘å¹´æœˆæ•°æ®
 		int i=0;
-		
-		System.out.println("È¡»ù½ğ´úÂë¼°»ù½ğÄêÔÂÊı¾İ¿ªÊ¼ÁË");
+
+		System.out.println("å–åŸºé‡‘ä»£ç åŠåŸºé‡‘å¹´æœˆæ•°æ®å¼€å§‹äº†");
 		do {
 			++i;
-			url = new String(publicVariable.fund_month_year_tables_url_before+i+publicVariable.fund_month_year_tables_url_after);
-			doc = net.netConnection.JsoupNetConnection(url,publicVariable.fund_month_year_tables_referrerUrl);
+			url = new String(fund_month_year_tables_url_before+i+fund_month_year_tables_url_after);
+			doc = net.netConnection.JsoupNetConnection(url,fund_month_year_tables_referrerUrl);
 			jsonSelectresult = doc.text();
 			Parser.jsonFilters.jsonFiltersFundForCodeMonthYear(jsonSelectresult);
 		}while(i<function.littleFunction.allRecords(jsonSelectresult));
-		
-		System.out.println("È¡»ù½ğ´úÂë¼°»ù½ğÄêÔÂÊı¾İ½áÊøÁË");
-		
-		//Ê¹ÓÃ»ù½ğ´úÂëµÃµ½»ù½ğÈÕÊı¾İ
+
+		System.out.println("å–åŸºé‡‘ä»£ç åŠåŸºé‡‘å¹´æœˆæ•°æ®ç»“æŸäº†");
+
+		//ä½¿ç”¨åŸºé‡‘ä»£ç å¾—åˆ°åŸºé‡‘æ—¥æ•°æ®
 		rs = db.query("SELECT stockFund_code FROM stock_fund_code_tables where type=\"fund\" and todayUpdate = 0 ;");
-		
-		System.out.println("È¡»ù½ğÈÕÊı¾İ¿ªÊ¼ÁË");
+
+		System.out.println("å–åŸºé‡‘æ—¥æ•°æ®å¼€å§‹äº†");
 		int count=0;
-		
+
 		try {
 			while(rs.next()) {
 				stockFund_code_string = rs.getString("stockFund_code");
-				i=0; //Ò³ÊıÖÃ0
+				i=0; //é¡µæ•°ç½®0
 				do {
 					++i;
-					url = new String(publicVariable.fund_day_data_tables_url_before 
-							+ stockFund_code_string 
-							+publicVariable.fund_day_data_tables_url_middle
+					url = new String(fund_day_data_tables_url_before
+							+ stockFund_code_string
+							+fund_day_data_tables_url_middle
 							+i
-							+publicVariable.fund_day_data_tables_url_after);	
-					referrerUrl = new String(publicVariable.fund_day_data_tables_referrerUrl_before + stockFund_code_string + publicVariable.fund_day_data_tables_referrerUrl_after);
+							+fund_day_data_tables_url_after);
+					referrerUrl = new String(fund_day_data_tables_referrerUrl_before + stockFund_code_string + fund_day_data_tables_referrerUrl_after);
 					doc = net.netConnection.JsoupNetConnection(url,referrerUrl);
 					jsonSelectresult = doc.text();
 					Parser.jsonFilters.jsonFiltersFundHistoryDay(stockFund_code_string,jsonSelectresult);
-					file.txt.logFileWrite(stockFund_code_string+" Ò³Êı£º"+i+"/"+function.littleFunction.TotalCountCalculate(jsonSelectresult));
+					file.txt.logFileWrite(stockFund_code_string+" é¡µæ•°ï¼š"+i+"/"+function.littleFunction.TotalCountCalculate(jsonSelectresult));
 				}while(i<function.littleFunction.TotalCountCalculate(jsonSelectresult));
-				
+
 				db1.insert("update stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""+stockFund_code_string+"\";");
-				System.out.println(++count+" »ù½ğ´úÂë£º"+stockFund_code_string+" Íê³ÉÁË");
-				
+				System.out.println(++count+" åŸºé‡‘ä»£ç ï¼š"+stockFund_code_string+" å®Œæˆäº†");
+
 			}
 		} catch (SQLException e) {
 			file.txt.logFileWrite(e.toString());
 		}
-	
+
 		db.queryCodeClose();
 		db1.queryCodeClose();
 	}

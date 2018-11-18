@@ -19,13 +19,13 @@ public class dataBaseClass {
 		String username = "root";
 		String password = "545638";
 		try {
-			Class.forName(driver);// ¼ÓÔØÇı¶¯³ÌĞò£¬´Ë´¦ÔËÓÃÒşÊ½×¢²áÇı¶¯³ÌĞòµÄ·½·¨
+			Class.forName(driver);// åŠ è½½é©±åŠ¨ç¨‹åºï¼Œæ­¤å¤„è¿ç”¨éšå¼æ³¨å†Œé©±åŠ¨ç¨‹åºçš„æ–¹æ³•
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		try {
-			con = DriverManager.getConnection(url, username, password);// ´´½¨Á¬½Ó¶ÔÏó
-			st = con.createStatement();// ´´½¨sqlÖ´ĞĞ¶ÔÏó
+			con = DriverManager.getConnection(url, username, password);// åˆ›å»ºè¿æ¥å¯¹è±¡
+			st = con.createStatement();// åˆ›å»ºsqlæ‰§è¡Œå¯¹è±¡
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -45,11 +45,11 @@ public class dataBaseClass {
 		try {
 			b = st.execute(insertCode);
 		} catch (SQLIntegrityConstraintViolationException e) {
-			file.txt.logFileWrite(e.toString()+" "+"ÖØ¸´£º"+insertCode);
+			file.txt.logFileWrite(e.toString()+" "+"é‡å¤ï¼š"+insertCode);
 		}catch (SQLException e) {
-			file.txt.logFileWrite(e.toString()+" "+"ÆäËûÒì³££º"+insertCode);
+			file.txt.logFileWrite(e.toString()+" "+"å…¶ä»–å¼‚å¸¸ï¼š"+insertCode);
 		}
-		
+
 		return b;
 	}
 

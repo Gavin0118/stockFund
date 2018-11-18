@@ -4,10 +4,10 @@ import net.sf.json.JSONObject;
 
 public class littleFunction {
 
-	public static int search(String str, String strRes) {// ²éÕÒ×Ö·û´®ÀïÓëÖ¸¶¨×Ö·û´®ÏàÍ¬µÄ¸öÊı
-		int n = 0;// ¼ÆÊıÆ÷
+	public static int search(String str, String strRes) {// æŸ¥æ‰¾å­—ç¬¦ä¸²é‡Œä¸æŒ‡å®šå­—ç¬¦ä¸²ç›¸åŒçš„ä¸ªæ•°
+		int n = 0;// è®¡æ•°å™¨
 //      for(int i = 0;i<str.length();i++) {
-//         
+//
 //      }
 		while (str.indexOf(strRes) != -1) {
 			int i = str.indexOf(strRes);
@@ -17,7 +17,7 @@ public class littleFunction {
 		return n;
 	}
 
-	// ¼ÆËã»ù½ğÔÂ¡¢ÄêÊı¾İµÄÌõÊı£¬È»ºó¼ÆËãÔÂÄêÊı¾İÓĞ¼¸Ò³
+	// è®¡ç®—åŸºé‡‘æœˆã€å¹´æ•°æ®çš„æ¡æ•°ï¼Œç„¶åè®¡ç®—æœˆå¹´æ•°æ®æœ‰å‡ é¡µ
 	public static int allRecords(String jsonSelectresult) {
 		JSONObject jsonObject;
 		jsonObject = JSONObject.fromObject(
@@ -25,16 +25,16 @@ public class littleFunction {
 		return new littleFunction().new function().countPage(jsonObject.getInt("allRecords"), 1000);
 	}
 
-	// ¼ÆËã»ù½ğÈÕÊı¾İÌõÊı£¬È»ºó¼ÆËãÈÕÊı¾İÓĞ¼¸Ò³
+	// è®¡ç®—åŸºé‡‘æ—¥æ•°æ®æ¡æ•°ï¼Œç„¶åè®¡ç®—æ—¥æ•°æ®æœ‰å‡ é¡µ
 	public static int TotalCountCalculate(String str) {
-		JSONObject jsonObject; // Õû¸öJSON¶ÔÏó
+		JSONObject jsonObject; // æ•´ä¸ªJSONå¯¹è±¡
 		jsonObject = JSONObject.fromObject(str);
 		return new littleFunction().new function().countPage(jsonObject.getInt("TotalCount"), 2000);
 	}
 
 	class function {
 
-		// ¸¨Öú¼ÆËã»ù½ğÄêÔÂÒ³Êı¡¢»ù½ğÈÕÊı¾İÒ³Êı
+		// è¾…åŠ©è®¡ç®—åŸºé‡‘å¹´æœˆé¡µæ•°ã€åŸºé‡‘æ—¥æ•°æ®é¡µæ•°
 		public int countPage(int n, int subNum) {
 			int rn;
 			if (n % subNum == 0) {
