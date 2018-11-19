@@ -27,7 +27,7 @@ public class dataBaseThreadPoolRunnable extends Thread {
 
     //打印线程池状态
     public void state() {
-        System.out.println("线程池中线程数目：" + executor.getPoolSize() + "，队列中等待执行的任务数目：" +
+        System.out.println("dataBaseThreadPoolRunnable  "+"线程池中线程数目：" + executor.getPoolSize() + "，队列中等待执行的任务数目：" +
                 executor.getQueue().size() + "，已执行玩别的任务数目：" + executor.getCompletedTaskCount());
     }
 

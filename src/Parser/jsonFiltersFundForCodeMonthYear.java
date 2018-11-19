@@ -1,8 +1,9 @@
 package Parser;
 
-import dataBase.dataBaseClass;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
+import static main.Main.dbtpr;
 
 public class jsonFiltersFundForCodeMonthYear {
 
@@ -20,7 +21,7 @@ public class jsonFiltersFundForCodeMonthYear {
         int n =0 ;//计算字符串中逗号个数
         int count=0; //取基金代码临时变量，计数用
 
-        dataBaseClass db = new dataBaseClass();
+        //dataBaseClass db = new dataBaseClass();
         //db.dataBaseClass();
 
         jsonObject = JSONObject.fromObject(str.substring(str.indexOf('{'), str.indexOf('}')+1));
@@ -34,18 +35,20 @@ public class jsonFiltersFundForCodeMonthYear {
             for(int j=0;j<n;j++) {
                 strtemp2 = strtemp1.substring(0,strtemp1.indexOf(','));
                 if(j==0) {
-                    db.insert("INSERT INTO stock_fund_Code_tables (stockFund_code,type) values(\""+strtemp2+"\",\"fund\");");
+                    dbtpr.new function().addInsertTask("INSERT INTO stock_fund_Code_tables (stockFund_code,type) values(\""+strtemp2+"\",\"fund\");");
+                    //db.insert("INSERT INTO stock_fund_Code_tables (stockFund_code,type) values(\""+strtemp2+"\",\"fund\");");
                 }
                 sqlmiddle = new String(sqlmiddle +"\""+strtemp2+"\""+",");
                 strtemp1 = strtemp1.substring(strtemp1.indexOf(',')+1,strtemp1.length());
             }
             sqlstr = new String(sqlstrBefore+sqlmiddle+"\""+strtemp1+"\");");
-            db.insert(sqlstr);
+            dbtpr.new function().addInsertTask(sqlstr);
+            //db.insert(sqlstr);
 
             file.txt.logFileWrite(++count+" ");
             if(count%50==0)
                 file.txt.logFileWrite("\n");
         }
-        db.queryCodeClose();
+        //db.queryCodeClose();
     }
 }

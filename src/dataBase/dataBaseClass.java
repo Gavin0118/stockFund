@@ -31,7 +31,7 @@ public class dataBaseClass {
         }
     }
 
-    public ResultSet query(String queryCode) {
+    ResultSet query(String queryCode) {
         try {
             rs = st.executeQuery(queryCode);
         } catch (SQLException e) {
@@ -40,7 +40,7 @@ public class dataBaseClass {
         return rs;
     }
 
-    public boolean insert(String insertCode) {
+    boolean insert(String insertCode) {
         boolean b = false;
         try {
             b = st.execute(insertCode);

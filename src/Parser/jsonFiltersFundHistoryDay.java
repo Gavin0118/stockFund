@@ -1,8 +1,9 @@
 package Parser;
 
-import dataBase.dataBaseClass;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
+import static main.Main.dbtpr;
 
 public class jsonFiltersFundHistoryDay {
 
@@ -20,16 +21,16 @@ public class jsonFiltersFundHistoryDay {
 		jsonObject = JSONObject.fromObject(str);
 
 		String sqlstr1 ="";
-		String sqlBefore_1 = new String("INSERT INTO fund_details_tables(fund_code,FundType,SYType,isNewType,Feature) VALUES (\""+stockFund_code+"\"");
+		String sqlBefore_1 = "INSERT INTO fund_details_tables(fund_code,FundType,SYType,isNewType,Feature) VALUES (\""+stockFund_code+"\"";
 		String sqlMiddle_1 = "";
 		String sqlAfter_1 = ");";
 
 		String sqlstr2 ="";
-		String sqlBefore_2 = new String("INSERT INTO fund_day_data_tables (fund_code,date,DWJZ,LJJZ,SDATE,ACTUALSYI,NAVTYPE,JZZZL,SGZT,SHZT,FHFCZ,FHFCBZ,DTYPE,FHSP) VALUES (\""+stockFund_code+"\"");
+		String sqlBefore_2 ="INSERT INTO fund_day_data_tables (fund_code,date,DWJZ,LJJZ,SDATE,ACTUALSYI,NAVTYPE,JZZZL,SGZT,SHZT,FHFCZ,FHFCBZ,DTYPE,FHSP) VALUES (\""+stockFund_code+"\"";
 		String sqlMiddle_2 = "";
 		String sqlAfter_2 = ");";
 
-		dataBaseClass db = new dataBaseClass();
+		//dataBaseClass db = new dataBaseClass();
 		//db.dataBaseInit();
 
 		jsonObject_Data = (JSONObject) jsonObject.get("Data");
@@ -44,7 +45,8 @@ public class jsonFiltersFundHistoryDay {
 			sqlMiddle_1 = new String(sqlMiddle_1+","+"\""+jsonObject_Data.getString(api_fund_eastmoney_com_Data[i])+"\"");
 		}
 		sqlstr1 = new String(sqlBefore_1+sqlMiddle_1+sqlAfter_1);
-		db.insert(sqlstr1);
+		//db.insert(sqlstr1);
+		dbtpr.new function().addInsertTask(sqlstr1);
 
 		//提取Data下数组对象LSJZList里面数组数据，存放于表 day_data_tables里面
 		jsonArray_Data_LSJZList = jsonObject_Data.getJSONArray("LSJZList");
@@ -57,9 +59,10 @@ public class jsonFiltersFundHistoryDay {
 				sqlMiddle_2 = new String(sqlMiddle_2+","+"\""+jsonArray_LSJZList_son.getString(api_fund_eastmoney_com_Data_LSJZList[j])+"\"");
 			}
 			sqlstr2 = new String(sqlBefore_2+sqlMiddle_2+sqlAfter_2);
-			db.insert(sqlstr2);
+			//db.insert(sqlstr2);
+			dbtpr.new function().addInsertTask(sqlstr2);
 		}
-		db.queryCodeClose();
+		//db.queryCodeClose();
 	}
 
 

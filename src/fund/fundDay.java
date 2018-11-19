@@ -7,7 +7,10 @@ import org.jsoup.nodes.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class fundDay {
+import static main.Main.dbtpr;
+import static main.Main.nctpr;
+
+public class fundDay extends Thread{
 
     /*
     * 基金日历史数据循环取类
@@ -21,7 +24,7 @@ public class fundDay {
     public final static String fund_day_data_tables_referrerUrl_before = "http://fund.eastmoney.com/f10/jjjz_";
     public final static String fund_day_data_tables_referrerUrl_after = ".htm";
 
-    public void fundDayF(){
+    public void run(){
 
         dataBaseClass db = new dataBaseClass();
         dataBaseClass db1 = new dataBaseClass();
@@ -36,8 +39,13 @@ public class fundDay {
 
         int i=0;//页数
 
+
         //使用基金代码得到基金日数据
-        rs = db.query("SELECT stockFund_code FROM stock_fund_code_tables where type=\"fund\" and todayUpdate = 0 ;");
+        String queryCode = "SELECT stockFund_code FROM stock_fund_code_tables where type=\"fund\" and todayUpdate = 0 ;";
+        dbtpr.new function().addQueryTask(queryCode);
+        rs = dbtpr.new function().getQuerytResult(queryCode);
+
+        // rs = db.query("SELECT stockFund_code FROM stock_fund_code_tables where type=\"fund\" and todayUpdate = 0 ;");
 
         System.out.println("取基金日数据开始了");
         int count=0;
@@ -56,7 +64,12 @@ public class fundDay {
                     referrerUrl = new String(fund_day_data_tables_referrerUrl_before
                             + stockFund_code_string
                             + fund_day_data_tables_referrerUrl_after);
-                    doc = net.netConnection.JsoupNetConnection(url,referrerUrl);
+
+                    //doc = netConnectionClass.JsoupNetConnection(url,referrerUrl);
+
+                    nctpr.new function().addNetConnectionTask(url,referrerUrl);
+                    doc =  nctpr.new function().getNetConnectionResult(url);
+
                     jsonSelectresult = doc.text();
                     new jsonFiltersFundHistoryDay().jsonFiltersFundHistoryDayF(stockFund_code_string,jsonSelectresult);
                     file.txt.logFileWrite(stockFund_code_string+" 页数："
@@ -65,9 +78,13 @@ public class fundDay {
                             +function.littleFunction.TotalCountCalculate(jsonSelectresult));
                 }while(i<function.littleFunction.TotalCountCalculate(jsonSelectresult));
 
-                db1.insert("update stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""
+
+                dbtpr.new function().addInsertTask("update stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""
                         +stockFund_code_string
                         +"\";");
+//                db1.insert("update stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""
+//                        +stockFund_code_string
+//                        +"\";");
                 System.out.println(++count+" 基金代码："+stockFund_code_string+" 完成了");
 
             }
