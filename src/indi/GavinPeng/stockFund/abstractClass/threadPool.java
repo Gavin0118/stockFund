@@ -13,7 +13,7 @@ public abstract class threadPool extends Thread {
     threadPool(int corePoolSize, int maximumPoolSize, int keepAliveTime,TimeUnit unit,int queueSize) {
 
         executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<>(queueSize));
+                new ArrayBlockingQueue<Runnable>(queueSize));
 
         tpa = new threadPoolArray[maximumPoolSize];//数组定义
 
