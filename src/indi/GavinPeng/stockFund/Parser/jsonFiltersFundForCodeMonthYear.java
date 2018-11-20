@@ -1,9 +1,11 @@
-package Parser;
+package indi.GavinPeng.stockFund.Parser;
 
+import indi.GavinPeng.stockFund.file.txt;
+import indi.GavinPeng.stockFund.function.littleFunction;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import static main.Main.dbtpr;
+import static indi.GavinPeng.stockFund.main.Main.dbtpr;
 
 public class jsonFiltersFundForCodeMonthYear {
 
@@ -30,7 +32,7 @@ public class jsonFiltersFundForCodeMonthYear {
 
         for(int i=0;i<jsonArray_datas.size();i++) {
             strtemp1 = jsonArray_datas.get(i).toString();
-            n=function.littleFunction.search(strtemp1,",");
+            n= littleFunction.search(strtemp1,",");
             sqlmiddle = "";
             for(int j=0;j<n;j++) {
                 strtemp2 = strtemp1.substring(0,strtemp1.indexOf(','));
@@ -45,9 +47,9 @@ public class jsonFiltersFundForCodeMonthYear {
             dbtpr.new function().addInsertTask(sqlstr);
             //db.insert(sqlstr);
 
-            file.txt.logFileWrite(++count+" ");
+            txt.logFileWrite(++count+" ");
             if(count%50==0)
-                file.txt.logFileWrite("\n");
+                txt.logFileWrite("\n");
         }
         //db.queryCodeClose();
     }

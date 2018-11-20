@@ -1,4 +1,4 @@
-package dataBase;
+package indi.GavinPeng.stockFund.dataBase;
 
 import java.sql.ResultSet;
 import java.util.concurrent.ArrayBlockingQueue;

@@ -1,14 +1,16 @@
-package fund;
+package indi.GavinPeng.stockFund.fund;
 
-import Parser.jsonFiltersFundHistoryDay;
-import dataBase.dataBaseClass;
+import indi.GavinPeng.stockFund.Parser.jsonFiltersFundHistoryDay;
+import indi.GavinPeng.stockFund.dataBase.dataBaseClass;
+import indi.GavinPeng.stockFund.file.txt;
+import indi.GavinPeng.stockFund.function.littleFunction;
 import org.jsoup.nodes.Document;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static main.Main.dbtpr;
-import static main.Main.nctpr;
+import static indi.GavinPeng.stockFund.main.Main.dbtpr;
+import static indi.GavinPeng.stockFund.main.Main.nctpr;
 
 public class fundDay extends Thread{
 
@@ -72,11 +74,11 @@ public class fundDay extends Thread{
 
                     jsonSelectresult = doc.text();
                     new jsonFiltersFundHistoryDay().jsonFiltersFundHistoryDayF(stockFund_code_string,jsonSelectresult);
-                    file.txt.logFileWrite(stockFund_code_string+" 页数："
+                    txt.logFileWrite(stockFund_code_string+" 页数："
                             +i
                             +"/"
-                            +function.littleFunction.TotalCountCalculate(jsonSelectresult));
-                }while(i<function.littleFunction.TotalCountCalculate(jsonSelectresult));
+                            + littleFunction.TotalCountCalculate(jsonSelectresult));
+                }while(i< littleFunction.TotalCountCalculate(jsonSelectresult));
 
 
                 dbtpr.new function().addInsertTask("update stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""
@@ -89,7 +91,7 @@ public class fundDay extends Thread{
 
             }
         } catch (SQLException e) {
-            file.txt.logFileWrite(e.toString());
+            txt.logFileWrite(e.toString());
         }
 
         db.queryCodeClose();

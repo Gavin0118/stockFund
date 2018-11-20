@@ -1,4 +1,4 @@
-package file;
+package indi.GavinPeng.stockFund.file;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

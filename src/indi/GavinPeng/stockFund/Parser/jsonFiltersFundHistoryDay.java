@@ -1,9 +1,9 @@
-package Parser;
+package indi.GavinPeng.stockFund.Parser;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import static main.Main.dbtpr;
+import static indi.GavinPeng.stockFund.main.Main.dbtpr;
 
 public class jsonFiltersFundHistoryDay {
 

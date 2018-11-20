@@ -1,4 +1,6 @@
-package dataBase;
+package indi.GavinPeng.stockFund.dataBase;
+
+import indi.GavinPeng.stockFund.file.txt;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -45,9 +47,9 @@ public class dataBaseClass {
         try {
             b = st.execute(insertCode);
         } catch (SQLIntegrityConstraintViolationException e) {
-            file.txt.logFileWrite(e.toString() + " " + "重复：" + insertCode);
+            txt.logFileWrite(e.toString() + " " + "重复：" + insertCode);
         } catch (SQLException e) {
-            file.txt.logFileWrite(e.toString() + " " + "其他异常：" + insertCode);
+            txt.logFileWrite(e.toString() + " " + "其他异常：" + insertCode);
         }
 
         return b;

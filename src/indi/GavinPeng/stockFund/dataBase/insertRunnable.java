@@ -1,4 +1,4 @@
-package dataBase;
+package indi.GavinPeng.stockFund.dataBase;
 
 class insertRunnable implements Runnable {
 

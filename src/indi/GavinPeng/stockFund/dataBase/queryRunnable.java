@@ -1,8 +1,8 @@
-package dataBase;
+package indi.GavinPeng.stockFund.dataBase;
 
 import java.sql.ResultSet;
 
-import static main.Main.dbtpr;
+import static indi.GavinPeng.stockFund.main.Main.dbtpr;
 
 class queryRunnable implements Runnable {
 

@@ -1,6 +1,7 @@
-package main;
+package indi.GavinPeng.stockFund.main;
 
-import dataBase.dataBaseThreadPoolRunnable;
+import indi.GavinPeng.stockFund.dataBase.dataBaseThreadPoolRunnable;
+import indi.GavinPeng.stockFund.fund.fundDay;
 import net.netConnectionThreadPoolRunnable;
 
 public class Main {
@@ -30,9 +31,9 @@ public class Main {
 
 
 
-        //new fund.fundMonthYear().start();//取基金月数据及基金代码
+        //new fundMonthYear().start();//取基金月数据及基金代码
 
-        new fund.fundDay().start();//取基金日数据
+        new fundDay().start();//取基金日数据
 
         try {
             while (true) {

@@ -1,8 +1,10 @@
-package fund;
+package indi.GavinPeng.stockFund.fund;
 
+import indi.GavinPeng.stockFund.Parser.jsonFiltersFundForCodeMonthYear;
+import indi.GavinPeng.stockFund.function.littleFunction;
 import org.jsoup.nodes.Document;
 
-import static main.Main.nctpr;
+import static indi.GavinPeng.stockFund.main.Main.nctpr;
 
 public class fundMonthYear extends Thread {
 
@@ -30,8 +32,8 @@ public class fundMonthYear extends Thread {
 
 
             jsonSelectresult = doc.text();
-            new Parser.jsonFiltersFundForCodeMonthYear().jsonFiltersFundForCodeMonthYearF(jsonSelectresult);
-        }while(i<function.littleFunction.allRecords(jsonSelectresult));
+            new jsonFiltersFundForCodeMonthYear().jsonFiltersFundForCodeMonthYearF(jsonSelectresult);
+        }while(i< littleFunction.allRecords(jsonSelectresult));
         System.out.println("取基金代码及基金年月数据结束了");
     }
 

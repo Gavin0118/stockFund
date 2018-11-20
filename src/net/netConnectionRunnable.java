@@ -2,7 +2,7 @@ package net;
 
 import org.jsoup.nodes.Document;
 
-import static main.Main.nctpr;
+import static indi.GavinPeng.stockFund.main.Main.nctpr;
 
 public class netConnectionRunnable implements Runnable {
     private netConnectionClass nc = new netConnectionClass();
