@@ -1,4 +1,4 @@
-package net;
+package indi.GavinPeng.stockFund.net;
 
 import org.jsoup.nodes.Document;
 
@@ -8,7 +8,7 @@ public class netConnectionRunnable implements Runnable {
     private netConnectionClass nc = new netConnectionClass();
     private String url;
     private String referrerUrl;
-    Document doc;
+    private Document doc;
 
     netConnectionRunnable(String url,String referrerUrl) {
         this.url = url;

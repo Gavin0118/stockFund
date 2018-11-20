@@ -1,4 +1,4 @@
-package net;
+package indi.GavinPeng.stockFund.net;
 
 import org.jsoup.nodes.Document;
 
@@ -79,7 +79,7 @@ public class netConnectionThreadPoolRunnable extends Thread {
         }
 
 
-        public void putUrlAndReferrerUrl(String url,String referrerUrl){
+        void putUrlAndReferrerUrl(String url,String referrerUrl){
             for (int i = 0; i < maximumPoolSize; i++) {
                 if (nca[i].url.equals("")) {
                     nca[i].url = url;
@@ -90,7 +90,7 @@ public class netConnectionThreadPoolRunnable extends Thread {
 
         }
 
-        public void putNetReturnResult(String url,Document doc){
+        void putNetReturnResult(String url,Document doc){
             for (int i = 0; i < maximumPoolSize; i++) {
                 if (nca[i].url.equals(url)) {
                     nca[i].doc = doc;
@@ -101,7 +101,7 @@ public class netConnectionThreadPoolRunnable extends Thread {
 
         }
 
-        public void ncaRecordRecover(int number){
+        void ncaRecordRecover(int number){
             nca[number].url = "";
             nca[number].referrerUrl = "";
             nca[number].doc = null;

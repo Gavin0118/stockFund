@@ -1,4 +1,4 @@
-package net;
+package indi.GavinPeng.stockFund.net;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -8,17 +8,17 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 
-public class netConnectionClass {
+class netConnectionClass {
 
     private Document doc = null;
-    Connection connection;
+    private Connection connection;
 
     netConnectionClass() {
 
 
     }
 
-    public Document JsoupNetConnection(String url, String referrerUrl) {
+    Document JsoupNetConnection(String url, String referrerUrl) {
         try {
             connection = Jsoup.connect(url);
             connection.userAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.15)");

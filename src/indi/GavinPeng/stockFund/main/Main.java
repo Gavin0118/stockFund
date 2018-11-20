@@ -2,7 +2,7 @@ package indi.GavinPeng.stockFund.main;
 
 import indi.GavinPeng.stockFund.dataBase.dataBaseThreadPoolRunnable;
 import indi.GavinPeng.stockFund.fund.fundDay;
-import net.netConnectionThreadPoolRunnable;
+import indi.GavinPeng.stockFund.net.netConnectionThreadPoolRunnable;
 
 public class Main {
 
