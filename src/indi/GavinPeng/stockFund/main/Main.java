@@ -1,8 +1,10 @@
 package indi.GavinPeng.stockFund.main;
 
+import indi.GavinPeng.stockFund.abstractClass.testClass;
 import indi.GavinPeng.stockFund.dataBase.dataBaseThreadPoolRunnable;
-import indi.GavinPeng.stockFund.fund.fundDay;
 import indi.GavinPeng.stockFund.net.netConnectionThreadPoolRunnable;
+
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
@@ -30,21 +32,25 @@ public class Main {
 
 
 
+        testClass tc = new testClass(100,200,200, TimeUnit.MILLISECONDS,50);
+
+        tc.start();
+        tc.state();
 
         //new fundMonthYear().start();//取基金月数据及基金代码
 
-        new fundDay().start();//取基金日数据
+        //new fundDay().start();//取基金日数据
 
-        try {
-            while (true) {
-                System.out.println();
-                dbtpr.state();
-                nctpr.state();
-                Thread.sleep(5000);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            while (true) {
+//                System.out.println();
+//                dbtpr.state();
+//                nctpr.state();
+//                Thread.sleep(5000);
+//            }
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
