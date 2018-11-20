@@ -10,6 +10,10 @@ public abstract class threadPool extends Thread {
     private ThreadPoolExecutor executor; //线程池定义
     private threadPoolArray[] tpa ;//数组定义
 
+    threadPool(){
+
+    }
+
     threadPool(int corePoolSize, int maximumPoolSize, int keepAliveTime,TimeUnit unit,int queueSize) {
 
         executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.MILLISECONDS,

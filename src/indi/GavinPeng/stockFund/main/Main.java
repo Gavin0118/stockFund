@@ -4,8 +4,6 @@ import indi.GavinPeng.stockFund.abstractClass.testClass;
 import indi.GavinPeng.stockFund.dataBase.dataBaseThreadPoolRunnable;
 import indi.GavinPeng.stockFund.net.netConnectionThreadPoolRunnable;
 
-import java.util.concurrent.TimeUnit;
-
 public class Main {
 
     public static dataBaseThreadPoolRunnable dbtpr = new dataBaseThreadPoolRunnable();//创建数据库读写线程池(线程)
@@ -32,7 +30,7 @@ public class Main {
 
 
 
-        testClass tc = new testClass(100,200,200, TimeUnit.MILLISECONDS,50);
+        testClass tc = new testClass();
 
         tc.start();
         tc.state();
