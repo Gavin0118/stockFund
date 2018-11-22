@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import static indi.GavinPeng.stockFund.main.Main.dbtpr;
 import static indi.GavinPeng.stockFund.main.Main.nctpr;
+import static indi.GavinPeng.stockFund.main.Main.fundCount;
 
 public class fundDayThread extends Thread {
 
@@ -28,7 +29,6 @@ public class fundDayThread extends Thread {
     private Document doc;
     private int i;
     private ResultSet rs;
-    private int count=0;
 
 
     public fundDayThread(ResultSet rs) {
@@ -67,7 +67,7 @@ public class fundDayThread extends Thread {
                     + stockFund_code_string
                     + "\";");
 
-            System.out.println(++count + " 基金代码：" + stockFund_code_string + " 完成了");
+            System.out.println(++fundCount + " 基金代码：" + stockFund_code_string + " 完成了");
         } catch (SQLException e) {
             txt.logFileWrite(e.toString());
         }

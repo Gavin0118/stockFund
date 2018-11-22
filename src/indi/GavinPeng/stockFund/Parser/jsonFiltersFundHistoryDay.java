@@ -30,8 +30,6 @@ public class jsonFiltersFundHistoryDay {
 		String sqlMiddle_2 = "";
 		String sqlAfter_2 = ");";
 
-		//dataBaseClass db = new dataBaseClass();
-		//db.dataBaseInit();
 
 		jsonObject_Data = (JSONObject) jsonObject.get("Data");
 
@@ -45,9 +43,9 @@ public class jsonFiltersFundHistoryDay {
 			sqlMiddle_1 = new String(sqlMiddle_1+","+"\""+jsonObject_Data.getString(api_fund_eastmoney_com_Data[i])+"\"");
 		}
 		sqlstr1 = new String(sqlBefore_1+sqlMiddle_1+sqlAfter_1);
-		//db.insert(sqlstr1);
-		dbtpr.new function().addInsertTask(sqlstr1);
-
+		while(dbtpr.getQueueSizeBalance()==0) {
+			dbtpr.new function().addInsertTask(sqlstr1);
+		}
 		//提取Data下数组对象LSJZList里面数组数据，存放于表 day_data_tables里面
 		jsonArray_Data_LSJZList = jsonObject_Data.getJSONArray("LSJZList");
 		for(int i=0;i<jsonArray_Data_LSJZList.size();i++) {
@@ -59,10 +57,10 @@ public class jsonFiltersFundHistoryDay {
 				sqlMiddle_2 = new String(sqlMiddle_2+","+"\""+jsonArray_LSJZList_son.getString(api_fund_eastmoney_com_Data_LSJZList[j])+"\"");
 			}
 			sqlstr2 = new String(sqlBefore_2+sqlMiddle_2+sqlAfter_2);
-			//db.insert(sqlstr2);
-			dbtpr.new function().addInsertTask(sqlstr2);
+			while(dbtpr.getQueueSizeBalance()==0) {
+				dbtpr.new function().addInsertTask(sqlstr2);
+			}
 		}
-		//db.queryCodeClose();
 	}
 
 

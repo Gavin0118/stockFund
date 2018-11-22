@@ -15,7 +15,6 @@ class netConnectionClass {
 
     netConnectionClass() {
 
-
     }
 
     Document JsoupNetConnection(String url, String referrerUrl) {

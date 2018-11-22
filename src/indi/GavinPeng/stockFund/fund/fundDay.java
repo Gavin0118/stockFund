@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static indi.GavinPeng.stockFund.main.Main.dbtpr;
+import static indi.GavinPeng.stockFund.main.Main.nctpr;
 
 public class fundDay extends Thread{
 
@@ -25,10 +26,15 @@ public class fundDay extends Thread{
 
         try {
             while(rs.next()) {
+                while(nctpr.getQueueSizeBalance()==0){
+                  Thread.sleep(1000);
+                }
                 new fundDayThread(rs).start();
             }
         } catch (SQLException e) {
             txt.logFileWrite(e.toString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
