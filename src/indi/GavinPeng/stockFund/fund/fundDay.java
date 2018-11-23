@@ -1,6 +1,6 @@
 package indi.GavinPeng.stockFund.fund;
 
-import indi.GavinPeng.stockFund.file.txt;
+import indi.GavinPeng.stockFund.file.outputTxt;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,9 +32,9 @@ public class fundDay extends Thread{
                 new fundDayThread(rs).start();
             }
         } catch (SQLException e) {
-            txt.logFileWrite(e.toString());
+            outputTxt.logFileWrite(e.toString(),1);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            outputTxt.logFileWrite(e.toString(),1);
         }
     }
 }

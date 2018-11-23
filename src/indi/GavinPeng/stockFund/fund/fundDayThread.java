@@ -1,7 +1,7 @@
 package indi.GavinPeng.stockFund.fund;
 
 import indi.GavinPeng.stockFund.Parser.jsonFiltersFundHistoryDay;
-import indi.GavinPeng.stockFund.file.txt;
+import indi.GavinPeng.stockFund.file.outputTxt;
 import indi.GavinPeng.stockFund.function.littleFunction;
 import org.jsoup.nodes.Document;
 
@@ -16,11 +16,11 @@ public class fundDayThread extends Thread {
 
     //东方财富 天天基金网 通过基金代码得到基金日数据表的链接拼凑
     //http://api.fund.eastmoney.com/f10/lsjz?fundCode=270042&pageIndex=1&pageSize=2000
-    public final static String fund_day_data_tables_url_before = "http://api.fund.eastmoney.com/f10/lsjz?fundCode=";
-    public final static String fund_day_data_tables_url_middle = "&pageIndex=";
-    public final static String fund_day_data_tables_url_after = "&pageSize=2000";
-    public final static String fund_day_data_tables_referrerUrl_before = "http://fund.eastmoney.com/f10/jjjz_";
-    public final static String fund_day_data_tables_referrerUrl_after = ".htm";
+    private final static String fund_day_data_tables_url_before = "http://api.fund.eastmoney.com/f10/lsjz?fundCode=";
+    private final static String fund_day_data_tables_url_middle = "&pageIndex=";
+    private final static String fund_day_data_tables_url_after = "&pageSize=2000";
+    private final static String fund_day_data_tables_referrerUrl_before = "http://fund.eastmoney.com/f10/jjjz_";
+    private final static String fund_day_data_tables_referrerUrl_after = ".htm";
 
     private String url;
     private String referrerUrl;
@@ -31,7 +31,7 @@ public class fundDayThread extends Thread {
     private ResultSet rs;
 
 
-    public fundDayThread(ResultSet rs) {
+    fundDayThread(ResultSet rs) {
         this.rs = rs;
     }
 
@@ -47,19 +47,19 @@ public class fundDayThread extends Thread {
                         + fund_day_data_tables_url_middle
                         + i
                         + fund_day_data_tables_url_after;
-                referrerUrl = new String(fund_day_data_tables_referrerUrl_before
+                referrerUrl = fund_day_data_tables_referrerUrl_before
                         + stockFund_code_string
-                        + fund_day_data_tables_referrerUrl_after);
+                        + fund_day_data_tables_referrerUrl_after;
 
                 nctpr.new function().addNetConnectionTask(url, referrerUrl);
                 doc = nctpr.new function().getNetConnectionResult(url);
 
                 jsonSelectresult = doc.text();
                 new jsonFiltersFundHistoryDay().jsonFiltersFundHistoryDayF(stockFund_code_string, jsonSelectresult);
-                txt.logFileWrite(stockFund_code_string + " 页数："
+                outputTxt.logFileWrite(stockFund_code_string + " 页数："
                         + i
                         + "/"
-                        + littleFunction.TotalCountCalculate(jsonSelectresult));
+                        + littleFunction.TotalCountCalculate(jsonSelectresult),0);
             } while (i < littleFunction.TotalCountCalculate(jsonSelectresult));
 
 
@@ -69,7 +69,7 @@ public class fundDayThread extends Thread {
 
             System.out.println(++fundCount + " 基金代码：" + stockFund_code_string + " 完成了");
         } catch (SQLException e) {
-            txt.logFileWrite(e.toString());
+            outputTxt.logFileWrite(e.toString(),1);
         }
 
     }

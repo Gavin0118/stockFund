@@ -1,5 +1,6 @@
 package indi.GavinPeng.stockFund.net;
 
+import indi.GavinPeng.stockFund.file.outputTxt;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,11 +31,11 @@ class netConnectionClass {
         } catch (ConnectException e) {
             e.printStackTrace();
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            outputTxt.logFileWrite(e.toString(),1);
         } catch (IOException e) {
-            e.printStackTrace();
+            outputTxt.logFileWrite(e.toString(),1);
         } catch (Exception e) {
-            e.printStackTrace();
+            outputTxt.logFileWrite(e.toString(),1);
         }
         return doc;
     }
