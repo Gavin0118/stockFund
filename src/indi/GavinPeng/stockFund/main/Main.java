@@ -2,7 +2,7 @@ package indi.GavinPeng.stockFund.main;
 
 import indi.GavinPeng.stockFund.dataBaseThreadPool.dataBaseThreadPoolThread;
 import indi.GavinPeng.stockFund.fund.fundDay;
-import indi.GavinPeng.stockFund.fund.fundMonthYear;
+import indi.GavinPeng.stockFund.fund.fundMonthYearThread;
 import indi.GavinPeng.stockFund.netConnectionThreadPool.netConnectionThreadPoolThread;
 
 public class Main {
@@ -18,7 +18,7 @@ public class Main {
         dbtpr.start();//开启数据库读写线程池并初始化
         nctpr.start();//开启网络读写线程池并初始化
 
-        new fundMonthYear().start();//取基金月数据及基金代码
+        new fundMonthYearThread().start();//取基金月数据及基金代码
 
         new fundDay().start();//取基金日数据
 

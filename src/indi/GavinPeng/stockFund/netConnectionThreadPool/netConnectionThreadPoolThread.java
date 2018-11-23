@@ -13,6 +13,7 @@ public class netConnectionThreadPoolThread extends threadPool {
 
     public void run(){
         setthreadName("netConnectionThreadPoolThread ");
+        new netConnectionThreadPoolArrayCleanThread().start(); //数组扫描并清理
     }
     public class function {
 

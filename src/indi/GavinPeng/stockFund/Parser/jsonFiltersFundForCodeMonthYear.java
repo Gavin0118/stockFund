@@ -32,7 +32,7 @@ public class jsonFiltersFundForCodeMonthYear {
 
         for(int i=0;i<jsonArray_datas.size();i++) {
             strtemp1 = jsonArray_datas.get(i).toString();
-            n= littleFunction.search(strtemp1,",");
+            n= new littleFunction().search(strtemp1,",");
             sqlmiddle = "";
             for(int j=0;j<n;j++) {
                 strtemp2 = strtemp1.substring(0,strtemp1.indexOf(','));

@@ -59,8 +59,8 @@ public class fundDayThread extends Thread {
                 outputTxt.logFileWrite(stockFund_code_string + " 页数："
                         + i
                         + "/"
-                        + littleFunction.TotalCountCalculate(jsonSelectresult),0);
-            } while (i < littleFunction.TotalCountCalculate(jsonSelectresult));
+                        + new littleFunction().TotalCountCalculate(jsonSelectresult),0);
+            } while (i < new littleFunction().TotalCountCalculate(jsonSelectresult));
 
 
             dbtpr.new function().addInsertTask("update stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""

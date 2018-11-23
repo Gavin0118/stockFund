@@ -14,6 +14,7 @@ public class dataBaseThreadPoolThread extends threadPool {
     @Override
     public void run() {
         setthreadName("dataBaseThreadPoolThread ");
+        new dataBaseThreadPoolArrayCleanThread().start();  //数组扫描并清理
     }
 
     public class function {

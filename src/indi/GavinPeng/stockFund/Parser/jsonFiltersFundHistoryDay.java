@@ -46,6 +46,7 @@ public class jsonFiltersFundHistoryDay {
         while (dbtpr.getQueueSizeBalance() == 0) {
             dbtpr.new function().addInsertTask(sqlstr1);
         }
+
         //提取Data下数组对象LSJZList里面数组数据，存放于表 day_data_tables里面
         jsonArray_Data_LSJZList = jsonObject_Data.getJSONArray("LSJZList");
         for (int i = 0; i < jsonArray_Data_LSJZList.size(); i++) {
