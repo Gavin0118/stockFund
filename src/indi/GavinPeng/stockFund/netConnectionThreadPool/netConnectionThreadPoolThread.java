@@ -1,18 +1,18 @@
-package indi.GavinPeng.stockFund.net;
+package indi.GavinPeng.stockFund.netConnectionThreadPool;
 
 import indi.GavinPeng.stockFund.abstractClass.threadPool;
 import org.jsoup.nodes.Document;
 
 import java.util.concurrent.TimeUnit;
 
-public class netConnectionThreadPoolRunnable extends threadPool {
+public class netConnectionThreadPoolThread extends threadPool {
 
-    public netConnectionThreadPoolRunnable() {
+    public netConnectionThreadPoolThread() {
         super(100,200,200, TimeUnit.MILLISECONDS,100);
     }
 
     public void run(){
-        setthreadName("netConnectionThreadPoolRunnable ");
+        setthreadName("netConnectionThreadPoolThread ");
     }
     public class function {
 

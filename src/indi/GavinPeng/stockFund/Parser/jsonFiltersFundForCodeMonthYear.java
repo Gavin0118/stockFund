@@ -46,7 +46,7 @@ public class jsonFiltersFundForCodeMonthYear {
             sqlstr = sqlstrBefore+sqlmiddle+"\""+strtemp1+"\");";
             dbtpr.new function().addInsertTask(sqlstr);
 
-            outputTxt.logFileWrite(++count+" ",1);
+            outputTxt.logFileWrite(++count+" ",0);
         }
     }
 }

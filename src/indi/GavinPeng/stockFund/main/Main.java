@@ -1,16 +1,16 @@
 package indi.GavinPeng.stockFund.main;
 
-import indi.GavinPeng.stockFund.dataBase.dataBaseThreadPoolRunnable;
+import indi.GavinPeng.stockFund.dataBaseThreadPool.dataBaseThreadPoolThread;
 import indi.GavinPeng.stockFund.fund.fundDay;
 import indi.GavinPeng.stockFund.fund.fundMonthYear;
-import indi.GavinPeng.stockFund.net.netConnectionThreadPoolRunnable;
+import indi.GavinPeng.stockFund.netConnectionThreadPool.netConnectionThreadPoolThread;
 
 public class Main {
 
     public static int fundCount = 0;
 
-    public static dataBaseThreadPoolRunnable dbtpr = new dataBaseThreadPoolRunnable();//创建数据库读写线程池(线程)
-    public static netConnectionThreadPoolRunnable nctpr = new netConnectionThreadPoolRunnable();//创建网络读写线程池(线程)
+    public static dataBaseThreadPoolThread dbtpr = new dataBaseThreadPoolThread();//创建数据库读写线程池(线程)
+    public static netConnectionThreadPoolThread nctpr = new netConnectionThreadPoolThread();//创建网络读写线程池(线程)
 
     public static void main(String[] args) {
         //TODO Auto-generated method stub

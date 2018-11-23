@@ -1,19 +1,19 @@
-package indi.GavinPeng.stockFund.dataBase;
+package indi.GavinPeng.stockFund.dataBaseThreadPool;
 
 import indi.GavinPeng.stockFund.abstractClass.threadPool;
 
 import java.sql.ResultSet;
 import java.util.concurrent.TimeUnit;
 
-public class dataBaseThreadPoolRunnable extends threadPool {
+public class dataBaseThreadPoolThread extends threadPool {
 
-    public dataBaseThreadPoolRunnable() {
+    public dataBaseThreadPoolThread() {
         super(100,200,200, TimeUnit.MILLISECONDS,100);
     }
 
     @Override
     public void run() {
-        setthreadName("dataBaseThreadPoolRunnable ");
+        setthreadName("dataBaseThreadPoolThread ");
     }
 
     public class function {

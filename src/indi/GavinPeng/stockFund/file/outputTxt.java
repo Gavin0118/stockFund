@@ -21,7 +21,7 @@ public class outputTxt {
                 fileOutputPathAndName = "D:\\LOG\\stockFund_" + dateTimeformatForfileName.format(new Date()) + ".log";
             }
             else{
-                fileOutputPathAndName = "D:\\LOG\\stockFund_Exception_" + dateTimeformatForfileName.format(new Date()) + ".log";
+                fileOutputPathAndName = "D:\\LOG\\stockFund_" + dateTimeformatForfileName.format(new Date()) +"_Exception"+ ".log";
             }
             FileOutputStream fos = new FileOutputStream(fileOutputPathAndName, true);// true表示在文件末尾追加
             str = dateTimeformat.format(new Date()) + " " + str + "\r\n";
