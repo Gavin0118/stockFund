@@ -38,7 +38,7 @@ public class netConnectionThreadPoolRunnable extends threadPool {
                             Thread.currentThread().sleep(1000);
                         }
                         doc = tpa[i].doc;
-                        dabRecordRecover(i);
+                        new threadPool.threadPoolFunction().dabRecordRecover(i);
                         break;
                     }
                     if (i == (maximumPoolSize - 1)) {

@@ -14,10 +14,11 @@ public class dataBaseClass {
     private Connection con;
     private ResultSet rs;
 
-    public dataBaseClass() {
+    dataBaseClass() {
         //String driver = "com.mysql.jdbc.Driver";
         String driver = "com.mysql.cj.jdbc.Driver";
-        String url = "jdbc:mysql://127.0.0.1:3306/stockfund";
+        //jdbc.url=jdbc:mysql://192.168.0.109:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+        String url = "jdbc:mysql://127.0.0.1:3306/stockfund?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false";
         String username = "root";
         String password = "545638";
         try {

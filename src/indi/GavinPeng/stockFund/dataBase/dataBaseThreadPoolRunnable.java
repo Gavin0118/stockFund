@@ -56,7 +56,7 @@ public class dataBaseThreadPoolRunnable extends threadPool {
                             Thread.currentThread().sleep(1000);
                         }
                         rs = tpa[i].qureyReturnValue;
-                        dabRecordRecover(i);
+                        new threadPool.threadPoolFunction().dabRecordRecover(i);
                         break;
                     }
                     if (i == (maximumPoolSize - 1)) {
