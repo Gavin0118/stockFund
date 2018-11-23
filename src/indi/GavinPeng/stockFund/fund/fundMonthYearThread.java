@@ -1,6 +1,7 @@
 package indi.GavinPeng.stockFund.fund;
 
 import indi.GavinPeng.stockFund.Parser.jsonFiltersFundForCodeMonthYear;
+import indi.GavinPeng.stockFund.file.outputTxt;
 import indi.GavinPeng.stockFund.function.littleFunction;
 import org.jsoup.nodes.Document;
 
@@ -18,7 +19,7 @@ public class fundMonthYearThread extends Thread {
         Document doc;
         String url;
         int i=0; //页数
-        System.out.println("取基金代码及基金年月数据开始了");
+        outputTxt.logFileWrite("取基金代码及基金年月数据开始了",0);
         do {
             ++i;
             url = fund_month_year_tables_url_before+i+fund_month_year_tables_url_after;
@@ -27,7 +28,7 @@ public class fundMonthYearThread extends Thread {
             jsonSelectresult = doc.text();
             new jsonFiltersFundForCodeMonthYear().jsonFiltersFundForCodeMonthYearF(jsonSelectresult);
         }while(i< new littleFunction().allRecords(jsonSelectresult));
-        System.out.println("取基金代码及基金年月数据结束了");
+        outputTxt.logFileWrite("取基金代码及基金年月数据结束了",0);
     }
 
 }

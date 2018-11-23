@@ -16,19 +16,14 @@ public abstract class threadPool extends Thread {
     protected int queueSize;
     private String threadName;
 
-    public threadPool() {
-
-    }
-
     public threadPool(int corePoolSize, int maximumPoolSize, int keepAliveTime, TimeUnit unit, int queueSize) {
 
         executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.MILLISECONDS,
                 new ArrayBlockingQueue<>(queueSize));
+        tpa = new threadPoolArray[maximumPoolSize];//数组定义
         this.corePoolSize = corePoolSize;
         this.maximumPoolSize = maximumPoolSize;
         this.queueSize = queueSize;
-
-        tpa = new threadPoolArray[maximumPoolSize];//数组定义
 
         //数组初始化
         for (int i = 0; i < maximumPoolSize; i++) {
@@ -70,7 +65,6 @@ public abstract class threadPool extends Thread {
         return executor.getCompletedTaskCount();
     }
 
-
     //关闭线程池
     public void threadPoolRunableClose() {
         executor.shutdown();
@@ -81,12 +75,10 @@ public abstract class threadPool extends Thread {
         //数据库线程池使用
         public String code;// 保存查询语句执行代码 默认"null"
         public ResultSet qureyReturnValue;//查询返回的结果保存  默认为null
-
         //网络线程池使用
         public String url;         //网络连接用的URL
         public String referrerUrl; //网络连接用的referrerUrl
         public Document doc;       //网络返回值
-
         //共用
         public int update; //记录返回值数据是否更新 0：默认 1：已更新
     }
@@ -98,16 +90,12 @@ public abstract class threadPool extends Thread {
             //数据库相关
             tpa[number].code = "";
             tpa[number].qureyReturnValue = null;
-
             //网络相关
             tpa[number].url = "";
             tpa[number].referrerUrl = "";
             tpa[number].doc = null;
-
             //公共
             tpa[number].update = 0;
         }
     }
-
-
 }

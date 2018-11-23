@@ -42,32 +42,20 @@ public class fundDayThread extends Thread {
             i = 0; //页数置0
             do {
                 ++i;
-                url = fund_day_data_tables_url_before
-                        + stockFund_code_string
-                        + fund_day_data_tables_url_middle
-                        + i
-                        + fund_day_data_tables_url_after;
-                referrerUrl = fund_day_data_tables_referrerUrl_before
-                        + stockFund_code_string
+                url = fund_day_data_tables_url_before + stockFund_code_string + fund_day_data_tables_url_middle
+                        + i + fund_day_data_tables_url_after;
+                referrerUrl = fund_day_data_tables_referrerUrl_before + stockFund_code_string
                         + fund_day_data_tables_referrerUrl_after;
-
                 nctpr.new function().addNetConnectionTask(url, referrerUrl);
                 doc = nctpr.new function().getNetConnectionResult(url);
-
                 jsonSelectresult = doc.text();
                 new jsonFiltersFundHistoryDay().jsonFiltersFundHistoryDayF(stockFund_code_string, jsonSelectresult);
                 outputTxt.logFileWrite(stockFund_code_string + " 页数："
-                        + i
-                        + "/"
-                        + new littleFunction().TotalCountCalculate(jsonSelectresult),0);
+                        + i + "/" + new littleFunction().TotalCountCalculate(jsonSelectresult),0);
             } while (i < new littleFunction().TotalCountCalculate(jsonSelectresult));
-
-
             dbtpr.new function().addInsertTask("update stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""
-                    + stockFund_code_string
-                    + "\";");
-
-            System.out.println(++fundCount + " 基金代码：" + stockFund_code_string + " 完成了");
+                    + stockFund_code_string + "\";");
+            outputTxt.logFileWrite(++fundCount + " 基金代码：" + stockFund_code_string + " 完成了",0);
         } catch (SQLException e) {
             outputTxt.logFileWrite(e.toString(),1);
         }

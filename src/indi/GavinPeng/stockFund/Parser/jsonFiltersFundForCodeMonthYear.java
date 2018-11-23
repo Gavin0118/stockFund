@@ -23,9 +23,6 @@ public class jsonFiltersFundForCodeMonthYear {
         int n ;//计算字符串中逗号个数
         int count=0; //取基金代码临时变量，计数用
 
-        //dataBaseClass db = new dataBaseClass();
-        //db.dataBaseClass();
-
         jsonObject = JSONObject.fromObject(str.substring(str.indexOf('{'), str.indexOf('}')+1));
 
         jsonArray_datas = jsonObject.getJSONArray("datas");
@@ -38,7 +35,6 @@ public class jsonFiltersFundForCodeMonthYear {
                 strtemp2 = strtemp1.substring(0,strtemp1.indexOf(','));
                 if(j==0) {
                     dbtpr.new function().addInsertTask("INSERT INTO stock_fund_Code_tables (stockFund_code,type) values(\""+strtemp2+"\",\"fund\");");
-                    //db.insert("INSERT INTO stock_fund_Code_tables (stockFund_code,type) values(\""+strtemp2+"\",\"fund\");");
                 }
                 sqlmiddle = sqlmiddle +"\""+strtemp2+"\""+",";
                 strtemp1 = strtemp1.substring(strtemp1.indexOf(',')+1,strtemp1.length());

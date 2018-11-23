@@ -53,7 +53,6 @@ public class jsonFiltersFundHistoryDay {
             jsonArray_LSJZList_son = JSONObject.fromObject(jsonArray_Data_LSJZList.get(i));
             sqlMiddle_2 = "";
             for (int j = 0; j < api_fund_eastmoney_com_Data_LSJZList.length; j++) {
-
                 sqlMiddle_2 = sqlMiddle_2 + "," + "\"" + jsonArray_LSJZList_son.getString(api_fund_eastmoney_com_Data_LSJZList[j]) + "\"";
             }
             sqlstr2 = sqlBefore_2 + sqlMiddle_2 + sqlAfter_2;
