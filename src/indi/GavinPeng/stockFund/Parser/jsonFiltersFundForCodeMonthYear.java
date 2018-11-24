@@ -37,12 +37,12 @@ public class jsonFiltersFundForCodeMonthYear {
                     dbtpr.new function().addInsertTask("INSERT INTO stock_fund_Code_tables (stockFund_code,type) values(\""+strtemp2+"\",\"fund\");");
                 }
                 sqlmiddle = sqlmiddle +"\""+strtemp2+"\""+",";
-                strtemp1 = strtemp1.substring(strtemp1.indexOf(',')+1,strtemp1.length());
+                strtemp1 = strtemp1.substring(strtemp1.indexOf(',')+1);
             }
             sqlstr = sqlstrBefore+sqlmiddle+"\""+strtemp1+"\");";
             dbtpr.new function().addInsertTask(sqlstr);
-
-            outputTxt.logFileWrite(++count+" ",0);
+            ++count;
+            outputTxt.logFileWrite("月数据基金数据计数 "+count+" ",0);
         }
     }
 }
