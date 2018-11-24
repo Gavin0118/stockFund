@@ -1,8 +1,13 @@
 package indi.GavinPeng.stockFund.abstractClass;
 
+import indi.GavinPeng.stockFund.file.outputTxt;
 import org.jsoup.nodes.Document;
 
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -26,17 +31,19 @@ public abstract class threadPool extends Thread {
         this.queueSize = queueSize;
 
         //数组初始化
-        for (int i = 0; i < maximumPoolSize; i++) {
-            tpa[i] = new threadPoolArray();
+        for (int number = 0; number < maximumPoolSize; number++) {
+            tpa[number] = new threadPoolArray();
             //数据库相关
-            tpa[i].code = "";
-            tpa[i].qureyReturnValue = null;
+            tpa[number].code = "";
+            tpa[number].qureyReturnValue = null;
             //网络相关
-            tpa[i].url = "";
-            tpa[i].referrerUrl = "";
-            tpa[i].doc = null;
+            tpa[number].url = "";
+            tpa[number].referrerUrl = "";
+            tpa[number].doc = null;
             //公共
-            tpa[i].update = 0;
+            tpa[number].TimeoutFlag =0;
+            tpa[number].outputValueUpdate = 0;
+            tpa[number].inputValueTime = null;
         }
     }
 
@@ -70,6 +77,10 @@ public abstract class threadPool extends Thread {
         executor.shutdown();
     }
 
+    //超时任务重新调用
+    public abstract void returnExe();
+
+
     //数组定义
     public class threadPoolArray {
         //数据库线程池使用
@@ -80,8 +91,11 @@ public abstract class threadPool extends Thread {
         public String referrerUrl; //网络连接用的referrerUrl
         public Document doc;       //网络返回值
         //共用
-        public int update; //记录返回值数据是否更新 0：默认 1：已更新
+        public int TimeoutFlag;//记录输入值是否可被执行线程调用，0：默认值，未超时 1：已超时
+        public Date inputValueTime;//记录输入值时间
+        public int outputValueUpdate; //记录返回值数据是否更新 0：默认 1：已更新
     }
+
 
     public class threadPoolFunction {
 
@@ -95,7 +109,39 @@ public abstract class threadPool extends Thread {
             tpa[number].referrerUrl = "";
             tpa[number].doc = null;
             //公共
-            tpa[number].update = 0;
+            tpa[number].TimeoutFlag =0;
+            tpa[number].inputValueTime = null;
+            tpa[number].outputValueUpdate = 0;
+        }
+
+        //清理线程或使用线程再次执行
+        public void arrayClean() {
+            DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            long minutes;
+            Date now ;
+            while (true) {
+                try {
+                    for (int i = 0; i < maximumPoolSize; i++) {
+                        if (tpa[i].inputValueTime != null) {
+                            now = dateTimeformat.parse(dateTimeformat.format(new Date()));
+                            minutes = (now.getTime() - tpa[i].inputValueTime.getTime()) / 1000;//得到分钟差值
+                            if (minutes > 480) {//大于6分钟，直接清除
+                                dabRecordRecover(i);
+                                outputTxt.logFileWrite(threadName+" 数组中有任务已经删除",0);
+                            } else if (minutes > 120) {//大于2分钟，状态改为可以被执行线程调用
+                                tpa[i].TimeoutFlag = 1;
+                                returnExe();
+                            }
+                        }
+                    }
+                    Thread.sleep(2000);//检查一轮后休息2秒
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
         }
     }
 }

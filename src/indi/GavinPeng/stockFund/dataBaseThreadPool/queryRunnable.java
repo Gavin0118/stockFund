@@ -15,9 +15,9 @@ class queryRunnable implements Runnable {
     }
 
     public void run(){
-        dbtpr.new function().putQuerytCode(str);
+        dbtpr.new function().putQuerytCode(str);//将任务放进数组
         rs = db.query(str);
-        dbtpr.new function().putQuerytResult(str,rs);
+        dbtpr.new function().putQuerytResult(str,rs);//将结果放进数据
     }
 
 }

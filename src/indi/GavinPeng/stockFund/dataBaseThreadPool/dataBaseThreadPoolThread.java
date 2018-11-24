@@ -14,7 +14,17 @@ public class dataBaseThreadPoolThread extends threadPool {
     @Override
     public void run() {
         setthreadName("dataBaseThreadPoolThread ");
-        new dataBaseThreadPoolArrayCleanThread().start();  //数组扫描并清理
+        new threadPoolFunction().arrayClean();
+    }
+
+    @Override
+    public void returnExe() {
+        for (int i = 0; i < maximumPoolSize; i++) {
+            if(tpa[i].TimeoutFlag==1){
+                tpa[i].TimeoutFlag=0;
+                new function().addQueryTask(tpa[i].code);
+            }
+        }
     }
 
     public class function {
@@ -28,7 +38,6 @@ public class dataBaseThreadPoolThread extends threadPool {
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
-
             }
             executor.execute(qr);
         }
@@ -53,7 +62,7 @@ public class dataBaseThreadPoolThread extends threadPool {
             try {
                 for (int i = 0; i < maximumPoolSize; i++) {
                     if (tpa[i].code.equals(queryCode)) {
-                        while (tpa[i].update==0) {
+                        while (tpa[i].outputValueUpdate ==0) {
                             Thread.currentThread().sleep(1000);
                         }
                         rs = tpa[i].qureyReturnValue;
@@ -71,7 +80,7 @@ public class dataBaseThreadPoolThread extends threadPool {
             return rs;
         }
 
-        //将查询数据库代码放上数组
+        //将查询数据库任务放上数组
         void putQuerytCode(String QueryOrInsertCode) {
             for (int i = 0; i < maximumPoolSize; i++) {
                 if (tpa[i].code.equals("")) {
@@ -86,7 +95,7 @@ public class dataBaseThreadPoolThread extends threadPool {
             for (int i = 0; i < maximumPoolSize; i++) {
                 if (tpa[i].code.equals(queryCode)) {
                     tpa[i].qureyReturnValue = rs;
-                    tpa[i].update = 1;
+                    tpa[i].outputValueUpdate = 1;
                     break;
                 }
             }

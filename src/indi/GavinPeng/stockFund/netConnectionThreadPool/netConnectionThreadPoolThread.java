@@ -13,10 +13,20 @@ public class netConnectionThreadPoolThread extends threadPool {
 
     public void run(){
         setthreadName("netConnectionThreadPoolThread ");
-        new netConnectionThreadPoolArrayCleanThread().start(); //数组扫描并清理
+        new threadPoolFunction().arrayClean();
     }
-    public class function {
 
+    @Override
+    public void returnExe() {
+        for (int i = 0; i < maximumPoolSize; i++) {
+            if(tpa[i].TimeoutFlag==1){
+                tpa[i].TimeoutFlag=0;
+                new function().addNetConnectionTask(tpa[i].url,tpa[i].referrerUrl);
+            }
+        }
+    }
+
+    public class function {
         public void addNetConnectionTask(String url,String referrerUrl){
             netConnectionRunnable ncr = new netConnectionRunnable(url,referrerUrl);
             try {
@@ -25,7 +35,6 @@ public class netConnectionThreadPoolThread extends threadPool {
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
-
             }
             executor.execute(ncr);
         }
@@ -35,7 +44,7 @@ public class netConnectionThreadPoolThread extends threadPool {
             try {
                 for (int i = 0; i < maximumPoolSize; i++) {
                     if (tpa[i].url.equals(url)) {
-                        while (tpa[i].update==0) {
+                        while (tpa[i].outputValueUpdate ==0) {
                             Thread.currentThread().sleep(1000);
                         }
                         doc = tpa[i].doc;
@@ -69,7 +78,7 @@ public class netConnectionThreadPoolThread extends threadPool {
             for (int i = 0; i < maximumPoolSize; i++) {
                 if (tpa[i].url.equals(url)) {
                     tpa[i].doc = doc;
-                    tpa[i].update = 1;
+                    tpa[i].outputValueUpdate = 1;
                     break;
                 }
             }
