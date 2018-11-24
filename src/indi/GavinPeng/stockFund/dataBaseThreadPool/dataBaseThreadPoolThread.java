@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 public class dataBaseThreadPoolThread extends threadPool {
 
+    private DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public dataBaseThreadPoolThread() {
         super(100, 200, 200, TimeUnit.MILLISECONDS, 100);
     }
@@ -87,7 +89,6 @@ public class dataBaseThreadPoolThread extends threadPool {
         //将查询数据库任务放上数组
         void putQuerytCode(String QueryOrInsertCode) {
             try {
-                DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 for (int i = 0; i < maximumPoolSize; i++) {
                     if (tpa[i].code.equals("")) {
                         tpa[i].code = QueryOrInsertCode;

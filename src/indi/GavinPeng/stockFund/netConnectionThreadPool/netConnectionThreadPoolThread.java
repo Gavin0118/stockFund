@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 public class netConnectionThreadPoolThread extends threadPool {
 
+    private DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public netConnectionThreadPoolThread() {
         super(100, 200, 200, TimeUnit.MILLISECONDS, 100);
     }
@@ -69,7 +71,6 @@ public class netConnectionThreadPoolThread extends threadPool {
 
         void putUrlAndReferrerUrl(String url, String referrerUrl) {
             try {
-                DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 for (int i = 0; i < maximumPoolSize; i++) {
                     if (tpa[i].url.equals("")) {
                         tpa[i].url = url;
