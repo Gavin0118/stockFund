@@ -53,7 +53,7 @@ public class fundDayThread extends Thread {
                 outputTxt.logFileWrite(stockFund_code_string + " 页数："
                         + i + "/" + new littleFunction().TotalCountCalculate(jsonSelectresult),0);
             } while (i < new littleFunction().TotalCountCalculate(jsonSelectresult));
-            dbtpr.new function().addInsertTask("outputValueUpdate stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""
+            dbtpr.new function().addInsertTask("update stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""
                     + stockFund_code_string + "\";");
             outputTxt.logFileWrite(++fundCount + " 基金代码：" + stockFund_code_string + " 完成了",0);
         } catch (SQLException e) {
