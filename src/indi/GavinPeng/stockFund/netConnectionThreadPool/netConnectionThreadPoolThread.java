@@ -11,8 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 public class netConnectionThreadPoolThread extends threadPool {
 
-    private DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     public netConnectionThreadPoolThread() {
         super(100, 200, 200, TimeUnit.MILLISECONDS, 100);
     }
@@ -70,6 +68,7 @@ public class netConnectionThreadPoolThread extends threadPool {
 
 
         void putUrlAndReferrerUrl(String url, String referrerUrl) {
+            DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //注意：不能做成静态的和公共的，不稳定
             try {
                 for (int i = 0; i < maximumPoolSize; i++) {
                     if (tpa[i].url.equals("")) {
@@ -82,7 +81,6 @@ public class netConnectionThreadPoolThread extends threadPool {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
         }
 
         void putNetReturnResult(String url, Document doc) {
