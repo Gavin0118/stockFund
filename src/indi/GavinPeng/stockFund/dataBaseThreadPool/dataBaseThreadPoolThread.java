@@ -3,12 +3,16 @@ package indi.GavinPeng.stockFund.dataBaseThreadPool;
 import indi.GavinPeng.stockFund.abstractClass.threadPool;
 
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class dataBaseThreadPoolThread extends threadPool {
 
     public dataBaseThreadPoolThread() {
-        super(100,200,200, TimeUnit.MILLISECONDS,100);
+        super(100, 200, 200, TimeUnit.MILLISECONDS, 100);
     }
 
     @Override
@@ -20,8 +24,8 @@ public class dataBaseThreadPoolThread extends threadPool {
     @Override
     public void returnExe() {
         for (int i = 0; i < maximumPoolSize; i++) {
-            if(tpa[i].TimeoutFlag==1){
-                tpa[i].TimeoutFlag=0;
+            if (tpa[i].TimeoutFlag == 1) {
+                tpa[i].TimeoutFlag = 0;
                 new function().addQueryTask(tpa[i].code);
             }
         }
@@ -62,7 +66,7 @@ public class dataBaseThreadPoolThread extends threadPool {
             try {
                 for (int i = 0; i < maximumPoolSize; i++) {
                     if (tpa[i].code.equals(queryCode)) {
-                        while (tpa[i].outputValueUpdate ==0) {
+                        while (tpa[i].outputValueUpdate == 0) {
                             Thread.currentThread().sleep(1000);
                         }
                         rs = tpa[i].qureyReturnValue;
@@ -82,11 +86,17 @@ public class dataBaseThreadPoolThread extends threadPool {
 
         //将查询数据库任务放上数组
         void putQuerytCode(String QueryOrInsertCode) {
-            for (int i = 0; i < maximumPoolSize; i++) {
-                if (tpa[i].code.equals("")) {
-                    tpa[i].code = QueryOrInsertCode;
-                    break;
+            try {
+                DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                for (int i = 0; i < maximumPoolSize; i++) {
+                    if (tpa[i].code.equals("")) {
+                        tpa[i].code = QueryOrInsertCode;
+                        tpa[i].inputValueTime = dateTimeformat.parse(dateTimeformat.format(new Date()));
+                        break;
+                    }
                 }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
 

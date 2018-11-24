@@ -3,15 +3,19 @@ package indi.GavinPeng.stockFund.netConnectionThreadPool;
 import indi.GavinPeng.stockFund.abstractClass.threadPool;
 import org.jsoup.nodes.Document;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class netConnectionThreadPoolThread extends threadPool {
 
     public netConnectionThreadPoolThread() {
-        super(100,200,200, TimeUnit.MILLISECONDS,100);
+        super(100, 200, 200, TimeUnit.MILLISECONDS, 100);
     }
 
-    public void run(){
+    public void run() {
         setthreadName("netConnectionThreadPoolThread ");
         new threadPoolFunction().arrayClean();
     }
@@ -19,16 +23,16 @@ public class netConnectionThreadPoolThread extends threadPool {
     @Override
     public void returnExe() {
         for (int i = 0; i < maximumPoolSize; i++) {
-            if(tpa[i].TimeoutFlag==1){
-                tpa[i].TimeoutFlag=0;
-                new function().addNetConnectionTask(tpa[i].url,tpa[i].referrerUrl);
+            if (tpa[i].TimeoutFlag == 1) {
+                tpa[i].TimeoutFlag = 0;
+                new function().addNetConnectionTask(tpa[i].url, tpa[i].referrerUrl);
             }
         }
     }
 
     public class function {
-        public void addNetConnectionTask(String url,String referrerUrl){
-            netConnectionRunnable ncr = new netConnectionRunnable(url,referrerUrl);
+        public void addNetConnectionTask(String url, String referrerUrl) {
+            netConnectionRunnable ncr = new netConnectionRunnable(url, referrerUrl);
             try {
                 while (executor.getQueue().size() >= queueSize) {
                     Thread.currentThread().sleep(1000);
@@ -39,12 +43,12 @@ public class netConnectionThreadPoolThread extends threadPool {
             executor.execute(ncr);
         }
 
-        public Document getNetConnectionResult(String url){
+        public Document getNetConnectionResult(String url) {
             Document doc = null;
             try {
                 for (int i = 0; i < maximumPoolSize; i++) {
                     if (tpa[i].url.equals(url)) {
-                        while (tpa[i].outputValueUpdate ==0) {
+                        while (tpa[i].outputValueUpdate == 0) {
                             Thread.currentThread().sleep(1000);
                         }
                         doc = tpa[i].doc;
@@ -63,18 +67,24 @@ public class netConnectionThreadPoolThread extends threadPool {
         }
 
 
-        void putUrlAndReferrerUrl(String url,String referrerUrl){
-            for (int i = 0; i < maximumPoolSize; i++) {
-                if (tpa[i].url.equals("")) {
-                    tpa[i].url = url;
-                    tpa[i].referrerUrl = referrerUrl;
-                    break;
+        void putUrlAndReferrerUrl(String url, String referrerUrl) {
+            try {
+                DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                for (int i = 0; i < maximumPoolSize; i++) {
+                    if (tpa[i].url.equals("")) {
+                        tpa[i].url = url;
+                        tpa[i].referrerUrl = referrerUrl;
+                        tpa[i].inputValueTime = dateTimeformat.parse(dateTimeformat.format(new Date()));
+                        break;
+                    }
                 }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
         }
 
-        void putNetReturnResult(String url,Document doc){
+        void putNetReturnResult(String url, Document doc) {
             for (int i = 0; i < maximumPoolSize; i++) {
                 if (tpa[i].url.equals(url)) {
                     tpa[i].doc = doc;
