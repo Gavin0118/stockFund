@@ -24,9 +24,10 @@ public class Main {
 
         try {
             while (true) {
-                dbtpr.state();
                 nctpr.state();
-                Thread.sleep(5000);
+                dbtpr.state();
+                System.out.println();
+                Thread.sleep(2000);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

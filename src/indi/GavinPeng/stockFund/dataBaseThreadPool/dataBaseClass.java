@@ -2,12 +2,7 @@ package indi.GavinPeng.stockFund.dataBaseThreadPool;
 
 import indi.GavinPeng.stockFund.file.outputTxt;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class dataBaseClass {
     private Statement st;
@@ -29,6 +24,8 @@ public class dataBaseClass {
         try {
             con = DriverManager.getConnection(url, username, password);// 创建连接对象
             st = con.createStatement();// 创建sql执行对象
+        }catch (SQLNonTransientConnectionException e) {
+            outputTxt.logFileWrite(e.toString() + " " + "Could not create connection to database server" ,1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,7 +45,10 @@ public class dataBaseClass {
         try {
             b = st.execute(insertCode);
         } catch (SQLIntegrityConstraintViolationException e) {
-            outputTxt.logFileWrite(e.toString() + " " + "重复：" + insertCode,1);
+            outputTxt.logFileWrite(e.toString() + " " + "重复异常：" + insertCode,1);
+        } catch (NullPointerException e) {
+            outputTxt.logFileWrite(e.toString() + " " + "空指针异常：" + insertCode,1);
+            e.printStackTrace();
         } catch (SQLException e) {
             outputTxt.logFileWrite(e.toString() + " " + "其他异常：" + insertCode,1);
         }

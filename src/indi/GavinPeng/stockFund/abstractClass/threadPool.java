@@ -42,7 +42,7 @@ public abstract class threadPool extends Thread {
             tpa[number].doc = null;
             //公共
             tpa[number].TimeoutFlag =0;
-            tpa[number].outputValueUpdate = 0;
+            tpa[number].TimeoutFlag = 0;
             tpa[number].inputValueTime = null;
         }
     }
@@ -53,8 +53,15 @@ public abstract class threadPool extends Thread {
 
     //打印线程池状态
     public void state() {
+//        String str;
         System.out.println(threadName + "线程池中线程数目：" + executor.getPoolSize() + "，队列中等待执行的任务数目：" +
                 executor.getQueue().size() + "，已执行完的任务数目：" + executor.getCompletedTaskCount());
+
+//        for (int number = 0; number < maximumPoolSize; number++) {
+//            str = tpa[number].code + tpa[number].qureyReturnValue + tpa[number].url+tpa[number].referrerUrl+ tpa[number].doc
+//            +tpa[number].TimeoutFlag+tpa[number].outputValueUpdate+tpa[number].inputValueTime ;
+//            outputTxt.logFileWrite(str,2);
+//        }
     }
 
     //线程池中线程数目
@@ -139,6 +146,8 @@ public abstract class threadPool extends Thread {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                }catch (NullPointerException e) {
+                    outputTxt.logFileWrite(e.toString(),1);
                 }
 
             }

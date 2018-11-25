@@ -13,15 +13,18 @@ public class outputTxt {
     private final static DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final static DateFormat dateTimeformatForfileName = new SimpleDateFormat("yyyy-MM-dd");
 
-    //日志文件写入函数 logType 0：正常日志记录 1：Exception
+    //日志文件写入函数 logType 0：正常日志记录 1：Exception 2：ThreadPoolState
     public static int logFileWrite(String str,int logType) {
         String fileOutputPathAndName;
         try {
             if (logType==0){
                 fileOutputPathAndName = "D:\\LOG\\stockFund_" + dateTimeformatForfileName.format(new Date()) + ".log";
             }
-            else{
+            else if (logType==1){
                 fileOutputPathAndName = "D:\\LOG\\stockFund_" + dateTimeformatForfileName.format(new Date()) +"_Exception"+ ".log";
+            }
+            else{
+                fileOutputPathAndName = "D:\\LOG\\stockFund_" + dateTimeformatForfileName.format(new Date()) +"_ThreadPoolState"+ ".log";
             }
             FileOutputStream fos = new FileOutputStream(fileOutputPathAndName, true);// true表示在文件末尾追加
             str = dateTimeformat.format(new Date()) + " " + str + "\r\n";
