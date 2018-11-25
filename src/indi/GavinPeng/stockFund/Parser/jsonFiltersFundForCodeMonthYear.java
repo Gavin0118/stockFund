@@ -36,7 +36,7 @@ public class jsonFiltersFundForCodeMonthYear {
                 sqlmiddle = sqlmiddle +"\""+strtemp2+"\""+",";
                 strtemp1 = strtemp1.substring(strtemp1.indexOf(',')+1);
             }
-            sqlstr = "call p_fund_month_year_net_tables("+sqlmiddle+"\""+strtemp1+"\");";
+            sqlstr = "call p_insert_fund_month_year_net_tables("+sqlmiddle+"\""+strtemp1+"\");";
             while (dbtpr.getQueueSizeBalance() > 0) {
                 dbtpr.new function().addInsertTask(sqlstr);
             }

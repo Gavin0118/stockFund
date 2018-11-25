@@ -24,10 +24,7 @@ public class jsonFiltersFundHistoryDay {
         String sqlMiddle_1 = "";
 
         String sqlstr2;
-        String sqlBefore_2 = "INSERT INTO fund_day_data_tables (fund_code,date,DWJZ,LJJZ,SDATE,ACTUALSYI,NAVTYPE,JZZZL,SGZT,SHZT,FHFCZ,FHFCBZ,DTYPE,FHSP) VALUES (\"" + stockFund_code + "\"";
         String sqlMiddle_2;
-        String sqlAfter_2 = ");";
-
 
         jsonObject_Data = (JSONObject) jsonObject.get("Data");
 
@@ -53,7 +50,7 @@ public class jsonFiltersFundHistoryDay {
             for (int j = 0; j < api_fund_eastmoney_com_Data_LSJZList.length; j++) {
                 sqlMiddle_2 = sqlMiddle_2 + "," + "\"" + jsonArray_LSJZList_son.getString(api_fund_eastmoney_com_Data_LSJZList[j]) + "\"";
             }
-            sqlstr2 = sqlBefore_2 + sqlMiddle_2 + sqlAfter_2;
+            sqlstr2 = "call p_insert_fund_day_data_tables(\"" + stockFund_code + "\"" + sqlMiddle_2 + ");";
             while (dbtpr.getQueueSizeBalance() > 0) {
                 dbtpr.new function().addInsertTask(sqlstr2);
             }
