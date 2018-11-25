@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class dataBaseThreadPoolThread extends threadPool {
 
     public dataBaseThreadPoolThread() {
-        super(100, 200, 200, TimeUnit.MILLISECONDS, 50);
+        super(40, 50, 200, TimeUnit.MILLISECONDS, 20);
     }
 
     @Override

@@ -6,6 +6,7 @@ import indi.GavinPeng.stockFund.function.littleFunction;
 import org.jsoup.nodes.Document;
 
 import static indi.GavinPeng.stockFund.main.Main.nctpr;
+import static indi.GavinPeng.stockFund.main.Main.fundMonthYearDataIsOk;
 
 public class fundMonthYearThread extends Thread {
 
@@ -29,6 +30,7 @@ public class fundMonthYearThread extends Thread {
             new jsonFiltersFundForCodeMonthYear().jsonFiltersFundForCodeMonthYearF(jsonSelectresult);
         }while(i< new littleFunction().allRecords(jsonSelectresult));
         outputTxt.logFileWrite("取基金代码及基金年月数据结束了",0);
+        fundMonthYearDataIsOk =1;
     }
 
 }
