@@ -131,15 +131,15 @@ public abstract class threadPool extends Thread {
             Date now ;
             while (true) {
                 try {
-                    for (int i = 0; i < maximumPoolSize; i++) {
-                        if (tpa[i].inputValueTime != null) {
+                    for (int number = 0; number < maximumPoolSize; number++) {
+                        if (tpa[number].inputValueTime != null) {
                             now = dateTimeformat.parse(dateTimeformat.format(new Date()));
-                            minutes = (now.getTime() - tpa[i].inputValueTime.getTime()) / 1000;//得到分钟差值
+                            minutes = (now.getTime() - tpa[number].inputValueTime.getTime()) / 1000;//得到分钟差值
                             if (minutes > 480) {//大于6分钟，直接清除
-                                dabRecordRecover(i);
+                                dabRecordRecover(number);
                                 outputTxt.logFileWrite(threadName+" 数组中有任务已经删除",0);
                             } else if (minutes > 120) {//大于2分钟，状态改为可以被执行线程调用
-                                tpa[i].TimeoutFlag = 1;
+                                tpa[number].TimeoutFlag = 1;
                                 returnExe();
                             }
                         }

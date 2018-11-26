@@ -23,10 +23,14 @@ public class dataBaseThreadPoolThread extends threadPool {
 
     @Override
     public void returnExe() {
-        for (int i = 0; i < maximumPoolSize; i++) {
-            if (tpa[i].TimeoutFlag == 1) {
-                tpa[i].TimeoutFlag = 0;
-                new function().addQueryTask(tpa[i].code);
+        for (int number = 0; number < maximumPoolSize; number++) {
+            if (tpa[number].TimeoutFlag == 1) {
+                tpa[number].TimeoutFlag = 0;
+                if(tpa[number].type == 1){
+                    new function().addQueryTask(tpa[number].code);
+                }else if(tpa[number].type == 2){
+                    new function().addInsertTask(tpa[number].code);
+                }
             }
         }
     }
@@ -64,17 +68,17 @@ public class dataBaseThreadPoolThread extends threadPool {
         public ResultSet getQuerytResult(String queryCode) {
             ResultSet rs = null;
             try {
-                for (int i = 0; i < maximumPoolSize; i++) {
-                    if (tpa[i].code.equals(queryCode)) {
-                        while (tpa[i].outputValueUpdate == 0) {
+                for (int number = 0; number < maximumPoolSize; number++) {
+                    if (tpa[number].code.equals(queryCode)) {
+                        while (tpa[number].outputValueUpdate == 0) {
                             Thread.currentThread().sleep(1000);
                         }
-                        rs = tpa[i].qureyReturnValue;
-                        new threadPool.threadPoolFunction().dabRecordRecover(i);
+                        rs = tpa[number].qureyReturnValue;
+                        new threadPool.threadPoolFunction().dabRecordRecover(number);
                         break;
                     }
-                    if (i == (maximumPoolSize - 1)) {
-                        i = -1;
+                    if (number == (maximumPoolSize - 1)) {
+                        number = -1;
                         Thread.currentThread().sleep(1000);
                     }
                 }
