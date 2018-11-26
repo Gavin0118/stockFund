@@ -10,6 +10,9 @@ class insertRunnable implements Runnable {
     }
 
     public void run() {
+        dbtpr.new function().putQueryOrInsertCode(str,2);//将任务放进数组
         db.insert(str);
+        dbtpr.new function().putInsertDown(str);
+        db.close();
     }
 }

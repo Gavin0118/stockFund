@@ -85,13 +85,14 @@ public class dataBaseThreadPoolThread extends threadPool {
         }
 
         //将查询数据库任务放上数组
-        void putQuerytCode(String QueryOrInsertCode) {
+        void putQueryOrInsertCode(String QueryOrInsertCode, int type) {
             DateFormat dateTimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //注意：不能做成静态的和公共的，不稳定
             try {
-                for (int i = 0; i < maximumPoolSize; i++) {
-                    if (tpa[i].code.equals("")) {
-                        tpa[i].code = QueryOrInsertCode;
-                        tpa[i].inputValueTime = dateTimeformat.parse(dateTimeformat.format(new Date()));
+                for (int number = 0; number < maximumPoolSize; number++) {
+                    if (tpa[number].code.equals("")) {
+                        tpa[number].type = type;
+                        tpa[number].code = QueryOrInsertCode;
+                        tpa[number].inputValueTime = dateTimeformat.parse(dateTimeformat.format(new Date()));
                         break;
                     }
                 }
@@ -102,10 +103,21 @@ public class dataBaseThreadPoolThread extends threadPool {
 
         //将查询结果放入数组
         void putQuerytResult(String queryCode, ResultSet rs) {
-            for (int i = 0; i < maximumPoolSize; i++) {
-                if (tpa[i].code.equals(queryCode)) {
-                    tpa[i].qureyReturnValue = rs;
-                    tpa[i].outputValueUpdate = 1;
+            for (int number = 0; number < maximumPoolSize; number++) {
+                if (tpa[number].code.equals(queryCode)) {
+                    tpa[number].qureyReturnValue = rs;
+                    tpa[number].outputValueUpdate = 1;
+                    break;
+                }
+            }
+
+        }
+
+        //将查询结果放入数组
+        void putInsertDown(String insertCode) {
+            for (int number = 0; number < maximumPoolSize; number++) {
+                if (tpa[number].code.equals(insertCode)) {
+                    new threadPool.threadPoolFunction().dabRecordRecover(number);
                     break;
                 }
             }

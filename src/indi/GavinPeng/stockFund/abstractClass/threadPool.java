@@ -34,6 +34,7 @@ public abstract class threadPool extends Thread {
         for (int number = 0; number < maximumPoolSize; number++) {
             tpa[number] = new threadPoolArray();
             //数据库相关
+            tpa[number].type = 0;
             tpa[number].code = "";
             tpa[number].qureyReturnValue = null;
             //网络相关
@@ -91,6 +92,7 @@ public abstract class threadPool extends Thread {
     //数组定义
     public class threadPoolArray {
         //数据库线程池使用
+        public int type; // 1:查询语句 2：插入语句 0：默认值，初始化值
         public String code;// 保存查询语句执行代码 默认"null"
         public ResultSet qureyReturnValue;//查询返回的结果保存  默认为null
         //网络线程池使用
@@ -109,6 +111,7 @@ public abstract class threadPool extends Thread {
         //数组此条清空,恢复初始状态
         public void dabRecordRecover(int number) {
             //数据库相关
+            tpa[number].type = 0;
             tpa[number].code = "";
             tpa[number].qureyReturnValue = null;
             //网络相关
