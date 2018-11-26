@@ -1,5 +1,7 @@
 package indi.GavinPeng.stockFund.dataBaseThreadPool;
 
+import static indi.GavinPeng.stockFund.main.Main.dbtpr;
+
 class insertRunnable implements Runnable {
 
     private dataBaseClass db = new dataBaseClass();

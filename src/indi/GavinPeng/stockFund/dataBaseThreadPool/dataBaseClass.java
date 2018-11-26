@@ -62,7 +62,7 @@ public class dataBaseClass {
         return b;
     }
 
-    public void queryCodeClose() {
+    public void close() {
         try {
             if (rs != null) {
                 rs.close();
