@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class netConnectionThreadPoolThread extends threadPool {
 
     public netConnectionThreadPoolThread() {
-        super(20, 10, 200, TimeUnit.MILLISECONDS, 10);
+        super(1,2 , 200, TimeUnit.MILLISECONDS, 1);
     }
 
     public void run() {
@@ -34,7 +34,7 @@ public class netConnectionThreadPoolThread extends threadPool {
         public void addNetConnectionTask(String url, String referrerUrl) {
             netConnectionRunnable ncr = new netConnectionRunnable(url, referrerUrl);
             try {
-                while (executor.getQueue().size() >= queueSize) {
+                while (getQueueSizeBalance()<=0) {
                     Thread.currentThread().sleep(1000);
                 }
             } catch (InterruptedException e) {

@@ -1,4 +1,4 @@
-package indi.GavinPeng.stockFund.Parser;
+package indi.GavinPeng.stockFund.fundYearMonthData;
 
 import indi.GavinPeng.stockFund.file.outputTxt;
 import indi.GavinPeng.stockFund.function.littleFunction;
@@ -31,7 +31,7 @@ public class jsonFiltersFundForCodeMonthYear {
             for(int j=0;j<n;j++) {
                 strtemp2 = strtemp1.substring(0,strtemp1.indexOf(','));
 //                if(j==0) {
-//                    dbtpr.new function().addInsertTask("INSERT INTO stock_fund_Code_tables (stockFund_code,type) values(\""+strtemp2+"\",\"fund\");");
+//                    dbtpr.new function().addInsertTask("INSERT INTO stock_fund_Code_tables (stockFund_code,type) values(\""+strtemp2+"\",\"fundDayData\");");
 //                }
                 sqlmiddle = sqlmiddle +"\""+strtemp2+"\""+",";
                 strtemp1 = strtemp1.substring(strtemp1.indexOf(',')+1);

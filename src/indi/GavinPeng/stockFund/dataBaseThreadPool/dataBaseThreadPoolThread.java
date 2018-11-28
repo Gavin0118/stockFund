@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class dataBaseThreadPoolThread extends threadPool {
 
     public dataBaseThreadPoolThread() {
-        super(40, 50, 200, TimeUnit.MILLISECONDS, 20);
+        super(100, 200, 200, TimeUnit.MILLISECONDS, 100);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class dataBaseThreadPoolThread extends threadPool {
         public void addQueryTask(String queryCode) {
             queryRunnable qr = new queryRunnable(queryCode);
             try {
-                while (executor.getQueue().size() >= queueSize) {
+                while (getQueueSizeBalance()<=0) {
                     Thread.currentThread().sleep(1000);
                 }
             } catch (InterruptedException e) {
@@ -54,7 +54,7 @@ public class dataBaseThreadPoolThread extends threadPool {
         public void addInsertTask(String insertCode) {
             insertRunnable ir = new insertRunnable(insertCode);
             try {
-                while (executor.getQueue().size() >= queueSize) {
+                while (getQueueSizeBalance()<=0) {
                     Thread.currentThread().sleep(1000);
                 }
             } catch (InterruptedException e) {

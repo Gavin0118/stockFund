@@ -1,4 +1,4 @@
-package indi.GavinPeng.stockFund.Parser;
+package indi.GavinPeng.stockFund.fundDayData;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -38,12 +38,19 @@ public class jsonFiltersFundHistoryDay {
             sqlMiddle_1 = sqlMiddle_1 + "," + "\"" + jsonObject_Data.getString(api_fund_eastmoney_com_Data[i]) + "\"";
         }
         sqlstr1 = "call p_insert_fund_details_tables(\"" + stockFund_code + "\"" + sqlMiddle_1 + ");";
-        while (dbtpr.getQueueSizeBalance() > 0) {
-            dbtpr.new function().addInsertTask(sqlstr1);
+
+        while (dbtpr.getQueueSizeBalance() <= 0) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        dbtpr.new function().addInsertTask(sqlstr1);
 
         //提取Data下数组对象LSJZList里面数组数据，存放于表 day_data_tables里面
         jsonArray_Data_LSJZList = jsonObject_Data.getJSONArray("LSJZList");
+
         for (int i = 0; i < jsonArray_Data_LSJZList.size(); i++) {
             jsonArray_LSJZList_son = JSONObject.fromObject(jsonArray_Data_LSJZList.get(i));
             sqlMiddle_2 = "";
@@ -51,10 +58,17 @@ public class jsonFiltersFundHistoryDay {
                 sqlMiddle_2 = sqlMiddle_2 + "," + "\"" + jsonArray_LSJZList_son.getString(api_fund_eastmoney_com_Data_LSJZList[j]) + "\"";
             }
             sqlstr2 = "call p_insert_fund_day_data_tables(\"" + stockFund_code + "\"" + sqlMiddle_2 + ");";
-            while (dbtpr.getQueueSizeBalance() > 0) {
-                dbtpr.new function().addInsertTask(sqlstr2);
+
+            while (dbtpr.getQueueSizeBalance() <= 0) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+            dbtpr.new function().addInsertTask(sqlstr2);
         }
+        System.out.println("jsonFiltersFundHistoryDay--------------------------------------------------------------4");
     }
 
 
