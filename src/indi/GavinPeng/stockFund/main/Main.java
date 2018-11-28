@@ -34,7 +34,7 @@ public class Main {
             while (true) {
                 nctpr.state();
                 dbtpr.state();
-                System.out.println('\n');
+                System.out.println();
                 Thread.sleep(2000);
             }
         } catch (InterruptedException e) {

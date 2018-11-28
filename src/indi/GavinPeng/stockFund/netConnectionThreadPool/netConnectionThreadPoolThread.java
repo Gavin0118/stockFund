@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class netConnectionThreadPoolThread extends threadPool {
 
     public netConnectionThreadPoolThread() {
-        super(1,2 , 200, TimeUnit.MILLISECONDS, 1);
+        super(20,30 , 200, TimeUnit.MILLISECONDS, 10);
     }
 
     public void run() {
