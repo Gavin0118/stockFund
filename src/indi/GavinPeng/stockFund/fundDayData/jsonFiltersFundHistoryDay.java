@@ -5,7 +5,7 @@ import net.sf.json.JSONObject;
 
 import static indi.GavinPeng.stockFund.main.Main.dbtpr;
 
-public class jsonFiltersFundHistoryDay {
+class jsonFiltersFundHistoryDay {
 
     //基金日数据使用数组
     //"http://api.fund.eastmoney.com/f10/lsjz?fundCode=270042&pageIndex=1&pageSize=2000";
@@ -13,7 +13,7 @@ public class jsonFiltersFundHistoryDay {
     private final static String[] api_fund_eastmoney_com_Data = {"LSJZList", "FundType", "SYType", "isNewType", "Feature"};
     private final static String[] api_fund_eastmoney_com_Data_LSJZList = {"FSRQ", "DWJZ", "LJJZ", "SDATE", "ACTUALSYI", "NAVTYPE", "JZZZL", "SGZT", "SHZT", "FHFCZ", "FHFCBZ", "DTYPE", "FHSP"};
 
-    public void jsonFiltersFundHistoryDayF(String stockFund_code, String str) {
+    void jsonFiltersFundHistoryDayF(String stockFund_code, String str) {
         JSONObject jsonObject; //整个JSON对象
         JSONObject jsonObject_Data; //JSON对象的子对象Data
         JSONArray jsonArray_Data_LSJZList; //Data下数组对象LSJZList
@@ -39,13 +39,13 @@ public class jsonFiltersFundHistoryDay {
         }
         sqlstr1 = "call p_insert_fund_details_tables(\"" + stockFund_code + "\"" + sqlMiddle_1 + ");";
 
-        while (dbtpr.getQueueSizeBalance() <= 0) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//        while (dbtpr.getQueueSizeBalance() <= 0) {
+//            try {
+//                Thread.sleep(10);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
         dbtpr.new function().addInsertTask(sqlstr1);
 
         //提取Data下数组对象LSJZList里面数组数据，存放于表 day_data_tables里面
@@ -59,16 +59,15 @@ public class jsonFiltersFundHistoryDay {
             }
             sqlstr2 = "call p_insert_fund_day_data_tables(\"" + stockFund_code + "\"" + sqlMiddle_2 + ");";
 
-            while (dbtpr.getQueueSizeBalance() <= 0) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+//            while (dbtpr.getQueueSizeBalance() <= 0) {
+//                try {
+//                    Thread.sleep(10);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
             dbtpr.new function().addInsertTask(sqlstr2);
         }
-        System.out.println("jsonFiltersFundHistoryDay--------------------------------------------------------------4");
     }
 
 

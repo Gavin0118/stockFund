@@ -1,6 +1,7 @@
 package indi.GavinPeng.stockFund.netConnectionThreadPool;
 
 import indi.GavinPeng.stockFund.abstractClass.threadPool;
+import indi.GavinPeng.stockFund.main.Main;
 import org.jsoup.nodes.Document;
 
 import java.text.DateFormat;
@@ -35,7 +36,7 @@ public class netConnectionThreadPoolThread extends threadPool {
             netConnectionRunnable ncr = new netConnectionRunnable(url, referrerUrl);
             try {
                 while (getQueueSizeBalance()<=0) {
-                    Thread.currentThread().sleep(1000);
+                    Thread.currentThread().sleep(Main.threadSleepTime);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -49,7 +50,7 @@ public class netConnectionThreadPoolThread extends threadPool {
                 for (int number = 0; number < maximumPoolSize; number++) {
                     if (tpa[number].url.equals(url)) {
                         while (tpa[number].outputValueUpdate == 0) {
-                            Thread.currentThread().sleep(1000);
+                            Thread.currentThread().sleep(Main.threadSleepTime);
                         }
                         doc = tpa[number].doc;
                         new threadPool.threadPoolFunction().dabRecordRecover(number);
@@ -57,7 +58,7 @@ public class netConnectionThreadPoolThread extends threadPool {
                     }
                     if (number == (maximumPoolSize - 1)) {
                         number = -1;
-                        Thread.currentThread().sleep(1000);
+                        Thread.currentThread().sleep(Main.threadSleepTime);
                     }
                 }
             } catch (InterruptedException e) {

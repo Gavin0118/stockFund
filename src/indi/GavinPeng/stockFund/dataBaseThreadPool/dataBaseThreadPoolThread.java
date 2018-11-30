@@ -1,6 +1,7 @@
 package indi.GavinPeng.stockFund.dataBaseThreadPool;
 
 import indi.GavinPeng.stockFund.abstractClass.threadPool;
+import indi.GavinPeng.stockFund.main.Main;
 
 import java.sql.ResultSet;
 import java.text.DateFormat;
@@ -12,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class dataBaseThreadPoolThread extends threadPool {
 
     public dataBaseThreadPoolThread() {
-        super(100, 200, 200, TimeUnit.MILLISECONDS, 100);
+        super(1500, 2000, 200, TimeUnit.MILLISECONDS, 500);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class dataBaseThreadPoolThread extends threadPool {
             queryRunnable qr = new queryRunnable(queryCode);
             try {
                 while (getQueueSizeBalance()<=0) {
-                    Thread.currentThread().sleep(1000);
+                    Thread.currentThread().sleep(Main.threadSleepTime);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -55,7 +56,7 @@ public class dataBaseThreadPoolThread extends threadPool {
             insertRunnable ir = new insertRunnable(insertCode);
             try {
                 while (getQueueSizeBalance()<=0) {
-                    Thread.currentThread().sleep(1000);
+                    Thread.currentThread().sleep(Main.threadSleepTime);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -71,7 +72,7 @@ public class dataBaseThreadPoolThread extends threadPool {
                 for (int number = 0; number < maximumPoolSize; number++) {
                     if (tpa[number].code.equals(queryCode)) {
                         while (tpa[number].outputValueUpdate == 0) {
-                            Thread.currentThread().sleep(1000);
+                            Thread.currentThread().sleep(Main.threadSleepTime);
                         }
                         rs = tpa[number].qureyReturnValue;
                         new threadPool.threadPoolFunction().dabRecordRecover(number);
@@ -79,7 +80,7 @@ public class dataBaseThreadPoolThread extends threadPool {
                     }
                     if (number == (maximumPoolSize - 1)) {
                         number = -1;
-                        Thread.currentThread().sleep(1000);
+                        Thread.currentThread().sleep(Main.threadSleepTime);
                     }
                 }
             } catch (InterruptedException e) {

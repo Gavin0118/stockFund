@@ -41,9 +41,9 @@ public class fundDayThread extends Thread {
                 referrerUrl = fund_day_data_tables_referrerUrl_before + stockFund_code_string
                         + fund_day_data_tables_referrerUrl_after;
 
-                while (nctpr.getQueueSizeBalance() <= 0) {
-                    Thread.sleep(1000);
-                }
+//                while (nctpr.getQueueSizeBalance() <= 0) {
+//                    Thread.sleep(10);
+//                }
 
                 nctpr.new function().addNetConnectionTask(url, referrerUrl);
                 doc = nctpr.new function().getNetConnectionResult(url);
@@ -54,19 +54,16 @@ public class fundDayThread extends Thread {
 
             } while (i < new littleFunction().TotalCountCalculate(jsonSelectresult));
 
-            while (dbtpr.getQueueSizeBalance() <= 0) {
-                Thread.sleep(1000);
-            }
+//            while (dbtpr.getQueueSizeBalance() <= 0) {
+//                Thread.sleep(10);
+//            }
 
             dbtpr.new function().addInsertTask("update stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""
                     + stockFund_code_string + "\";");
 
-            System.out.println("基金代码"+stockFund_code_string+"完成了");
             outputTxt.logFileWrite(++fundCount + " 基金代码：" + stockFund_code_string + " 完成了",0);
             fundCodeCirculateThread.count = fundCodeCirculateThread.count-1; //内存中的数量减少1
         } catch (NullPointerException e) {
-            outputTxt.logFileWrite(e.toString(),1);
-        } catch (InterruptedException e) {
             outputTxt.logFileWrite(e.toString(),1);
         }
 

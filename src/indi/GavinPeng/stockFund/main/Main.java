@@ -9,6 +9,8 @@ public class Main {
     public static int fundCount = 0;
     public static int fundMonthYearDataIsOk = 0;
 
+    public static long threadSleepTime = 10;
+
     public static dataBaseThreadPoolThread dbtpr = new dataBaseThreadPoolThread();//创建数据库读写线程池(线程)
     public static netConnectionThreadPoolThread nctpr = new netConnectionThreadPoolThread();//创建网络读写线程池(线程)
 
