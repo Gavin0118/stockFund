@@ -19,14 +19,22 @@ public abstract class codeCirculate extends Thread {
     //使用基金代码得到基金日数据
     private String queryCode = "SELECT stockFund_code FROM stock_fund_code_tables where type=\"fund\" and todayUpdate = 0 ;";
 
-    public void circulate() {
+    private String notice;
+
+
+    protected codeCirculate(String notice){
+        this.notice =notice;
+    }
+
+
+    void circulate() {
         try {
             while (dbtpr.getQueueSizeBalance() <= 0) {
                 Thread.sleep(10);
             }
             dbtpr.new function().addQueryTask(queryCode);
             rs = dbtpr.new function().getQuerytResult(queryCode);
-            outputTxt.logFileWrite("取基金日数据开始了", 0);
+            outputTxt.logFileWrite(notice, 0);
             while (rs.next()) {
                 while (nctpr.getQueueSizeBalance() <= 0 || count >= 5) {
                     Thread.sleep(Main.threadSleepTime);

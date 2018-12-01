@@ -18,10 +18,10 @@ public abstract class threadPool extends Thread {
     protected threadPoolArray[] tpa;//数组定义
     private int corePoolSize;
     protected int maximumPoolSize;
-    protected int queueSize;
+    private int queueSize;
     private String threadName;
 
-    public threadPool(int corePoolSize, int maximumPoolSize, int keepAliveTime, TimeUnit unit, int queueSize) {
+    protected threadPool(int corePoolSize, int maximumPoolSize, int keepAliveTime, TimeUnit unit, int queueSize) {
 
         executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.MILLISECONDS,
                 new ArrayBlockingQueue<>(queueSize));
