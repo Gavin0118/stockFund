@@ -16,7 +16,7 @@ public class fundCodeCirculateThread extends codeCirculate {
     }
 
     @Override
-    public void netConnection(String str) {
-        new fundDayNetConnectionThread(str).start();
+    public void netConnection(String stockFund_code) {
+        new fundDayNetConnectionThread(stockFund_code).start();
     }
 }

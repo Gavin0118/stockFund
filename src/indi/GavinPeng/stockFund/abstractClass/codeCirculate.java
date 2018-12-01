@@ -27,7 +27,7 @@ public abstract class codeCirculate extends Thread {
     }
 
 
-    void circulate() {
+    protected void circulate() {
         try {
             while (dbtpr.getQueueSizeBalance() <= 0) {
                 Thread.sleep(10);
@@ -49,5 +49,5 @@ public abstract class codeCirculate extends Thread {
         }
     }
 
-    public abstract void  netConnection(String str);
+    public abstract void  netConnection(String stockFund_code);
 }

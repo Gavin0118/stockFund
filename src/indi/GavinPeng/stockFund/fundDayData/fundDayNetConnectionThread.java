@@ -32,7 +32,6 @@ public class fundDayNetConnectionThread extends Thread {
     @Override
     public void run() {
         try {
-            //stockFund_code_string = rs.getString("stockFund_code");
             i = 0; //页数置0
             do {
                 ++i;
@@ -40,10 +39,6 @@ public class fundDayNetConnectionThread extends Thread {
                         + i + fund_day_data_tables_url_after;
                 referrerUrl = fund_day_data_tables_referrerUrl_before + stockFund_code_string
                         + fund_day_data_tables_referrerUrl_after;
-
-//                while (nctpr.getQueueSizeBalance() <= 0) {
-//                    Thread.sleep(10);
-//                }
 
                 nctpr.new function().addNetConnectionTask(url, referrerUrl);
                 doc = nctpr.new function().getNetConnectionResult(url);
@@ -53,10 +48,6 @@ public class fundDayNetConnectionThread extends Thread {
                         + i + "/" + new littleFunction().TotalCountCalculate(jsonSelectresult),0);
 
             } while (i < new littleFunction().TotalCountCalculate(jsonSelectresult));
-
-//            while (dbtpr.getQueueSizeBalance() <= 0) {
-//                Thread.sleep(10);
-//            }
 
             dbtpr.new function().addInsertTask("update stock_fund_code_tables set todayUpdate = 1 where stockFund_code = \""
                     + stockFund_code_string + "\";");
