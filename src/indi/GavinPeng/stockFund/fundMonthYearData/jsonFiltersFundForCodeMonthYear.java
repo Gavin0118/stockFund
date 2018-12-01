@@ -1,4 +1,4 @@
-package indi.GavinPeng.stockFund.fundYearMonthData;
+package indi.GavinPeng.stockFund.fundMonthYearData;
 
 import indi.GavinPeng.stockFund.file.outputTxt;
 import indi.GavinPeng.stockFund.function.littleFunction;
@@ -7,9 +7,9 @@ import net.sf.json.JSONObject;
 
 import static indi.GavinPeng.stockFund.main.Main.dbtpr;
 
-public class jsonFiltersFundForCodeMonthYear {
+class jsonFiltersFundForCodeMonthYear {
 
-    public void jsonFiltersFundForCodeMonthYearF(String str) {
+     void jsonFiltersFundForCodeMonthYearF(String jsonSelectresult) {
 
         JSONObject jsonObject; //存整个JSON对象
         JSONArray jsonArray_datas ; //存datas数组
@@ -20,7 +20,7 @@ public class jsonFiltersFundForCodeMonthYear {
         int n ;//计算字符串中逗号个数
         int count=0; //取基金代码临时变量，计数用
 
-        jsonObject = JSONObject.fromObject(str.substring(str.indexOf('{'), str.indexOf('}')+1));
+        jsonObject = JSONObject.fromObject(jsonSelectresult.substring(jsonSelectresult.indexOf('{'), jsonSelectresult.indexOf('}')+1));
 
         jsonArray_datas = jsonObject.getJSONArray("datas");
 
@@ -37,9 +37,14 @@ public class jsonFiltersFundForCodeMonthYear {
                 strtemp1 = strtemp1.substring(strtemp1.indexOf(',')+1);
             }
             sqlstr = "call p_insert_fund_month_year_net_tables("+sqlmiddle+"\""+strtemp1+"\");";
-            while (dbtpr.getQueueSizeBalance() > 0) {
-                dbtpr.new function().addInsertTask(sqlstr);
-            }
+//            while(dbtpr.getQueueSizeBalance() <= 0){
+//                try {
+//                    Thread.sleep(threadSleepTime);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+            dbtpr.new function().addInsertTask(sqlstr);
             ++count;
             outputTxt.logFileWrite("月数据基金数据计数 "+count+" ",0);
         }
