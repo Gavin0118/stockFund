@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
 
 import static indi.GavinPeng.stockFund.main.Main.*;
 
-public class fundDayThread extends Thread {
+public class fundDayNetConnectionThread extends Thread {
 
     //东方财富 天天基金网 通过基金代码得到基金日数据表的链接拼凑
     //http://api.fund.eastmoney.com/f10/lsjz?fundCode=270042&pageIndex=1&pageSize=2000
@@ -25,7 +25,7 @@ public class fundDayThread extends Thread {
     //private ResultSet rs;
 
 
-    fundDayThread(String stockFund_code_string) {
+    fundDayNetConnectionThread(String stockFund_code_string) {
         this.stockFund_code_string = stockFund_code_string;
     }
 
