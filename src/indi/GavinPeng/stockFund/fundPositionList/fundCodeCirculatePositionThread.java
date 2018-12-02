@@ -1,12 +1,12 @@
 package indi.GavinPeng.stockFund.fundPositionList;
 
-import indi.GavinPeng.stockFund.abstractClass.codeCirculate;
+import indi.GavinPeng.stockFund.abstractClass.fundCodeCirculate;
 
-public class codeCirculateThread extends codeCirculate {
+public class fundCodeCirculatePositionThread extends fundCodeCirculate {
 
 
-    public codeCirculateThread() {
-        super("基金持仓列表数据开始了");
+    public fundCodeCirculatePositionThread() {
+        super("基金持仓列表数据开始了",3);
     }
 
     public void run() {
