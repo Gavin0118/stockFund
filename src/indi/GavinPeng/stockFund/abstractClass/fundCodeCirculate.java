@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import static indi.GavinPeng.stockFund.main.Main.dbtpr;
 import static indi.GavinPeng.stockFund.main.Main.nctpr;
 
-public abstract class codeCirculate extends Thread {
+public abstract class fundCodeCirculate extends Thread {
     /*
      * 基金日历史数据循环取类
      * */
@@ -20,10 +20,12 @@ public abstract class codeCirculate extends Thread {
     private String queryCode = "SELECT stockFund_code FROM stock_fund_code_tables where type=\"fund\" and todayUpdate = 0 ;";
 
     private String notice;
+    private int netlimit;
 
 
-    protected codeCirculate(String notice){
+    protected fundCodeCirculate(String notice,int netlimit){
         this.notice =notice;
+        this.netlimit = netlimit;
     }
 
 
@@ -36,7 +38,7 @@ public abstract class codeCirculate extends Thread {
             rs = dbtpr.new function().getQuerytResult(queryCode);
             outputTxt.logFileWrite(notice, 0);
             while (rs.next()) {
-                while (nctpr.getQueueSizeBalance() <= 0 || count >= 5) {
+                while (nctpr.getQueueSizeBalance() <= 0 || count >= netlimit) {
                     Thread.sleep(Main.threadSleepTime);
                 }
                 netConnection(rs.getString("stockFund_code"));

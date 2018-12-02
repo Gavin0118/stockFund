@@ -6,8 +6,8 @@ public class fundCodeCirculateThread extends codeCirculate {
     /*
      * 基金日历史数据循环取类
      * */
-    public fundCodeCirculateThread(){
-        super("基金日数据开始了");
+    public fundCodeCirculateDayThread(){
+        super("基金日数据开始了",5);
 
     }
 
