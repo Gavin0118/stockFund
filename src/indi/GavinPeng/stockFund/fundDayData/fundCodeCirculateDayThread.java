@@ -1,8 +1,8 @@
 package indi.GavinPeng.stockFund.fundDayData;
 
-import indi.GavinPeng.stockFund.abstractClass.codeCirculate;
+import indi.GavinPeng.stockFund.abstractClass.fundCodeCirculate;
 
-public class fundCodeCirculateThread extends codeCirculate {
+public class fundCodeCirculateDayThread extends fundCodeCirculate {
     /*
      * 基金日历史数据循环取类
      * */

@@ -53,7 +53,7 @@ public class fundDayNetConnectionThread extends Thread {
                     + stockFund_code_string + "\";");
 
             outputTxt.logFileWrite(++fundCount + " 基金代码：" + stockFund_code_string + " 完成了",0);
-            fundCodeCirculateThread.count = fundCodeCirculateThread.count-1; //内存中的数量减少1
+            fundCodeCirculateDayThread.count = fundCodeCirculateDayThread.count-1; //内存中的数量减少1
         } catch (NullPointerException e) {
             outputTxt.logFileWrite(e.toString(),1);
         }
