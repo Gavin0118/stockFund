@@ -35,6 +35,10 @@ class dataFilter {
 
                 elementstemp = quarterData.get(j).getElementsByClass("tor");
 
+                if(elementstemp.size()<=0){
+                    elementstemp = quarterData.get(j).getElementsByClass("toc");//兼容 基金000041 这样的情况
+                }
+
                 try {
                     for (int k = elementstemp.size() - 3; k < elementstemp.size(); k++) {
                         strtemp = strtemp + ",\"" + elementstemp.get(k).text() + "\"";//占净值比例 //持股数(万股) //持仓市值(万元)
